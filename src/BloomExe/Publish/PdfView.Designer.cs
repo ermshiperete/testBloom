@@ -28,18 +28,31 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this._browser = new Bloom.Browser();
 			this.SuspendLayout();
+			//
+			// _browser
+			//
+			this._browser.BackColor = System.Drawing.Color.Blue;
+			this._browser.Dock = System.Windows.Forms.DockStyle.Fill;
+			this._browser.Location = new System.Drawing.Point(0, 0);
+			this._browser.Name = "_browser";
+			this._browser.Size = new System.Drawing.Size(150, 150);
+			this._browser.TabIndex = 0;
+			this._browser.VisibleChanged += new System.EventHandler(this._browser_VisibleChanged);
 			//
 			// PdfView
 			//
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this._browser);
 			this.Name = "PdfView";
-			this.Load += new System.EventHandler(this.PdfView_Load);
 			this.ResumeLayout(false);
 
 		}
 
 		#endregion
+
+		private Browser _browser;
 	}
 }

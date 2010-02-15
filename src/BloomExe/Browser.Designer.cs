@@ -1,8 +1,6 @@
-﻿using Bloom.Project;
-
-namespace Bloom
+﻿namespace Bloom
 {
-	partial class Shell
+	partial class Browser
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -22,7 +20,7 @@ namespace Bloom
 			base.Dispose(disposing);
 		}
 
-		#region Windows Form Designer generated code
+		#region Component Designer generated code
 
 		/// <summary>
 		/// Required method for Designer support - do not modify
@@ -30,23 +28,10 @@ namespace Bloom
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Shell));
-			this.SuspendLayout();
-			//
-			// Shell
-			//
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			components = new System.ComponentModel.Container();
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-			this.ClientSize = new System.Drawing.Size(1008, 502);
-			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.Name = "Shell";
-			this.Text = "Bloom";
-			this.ResumeLayout(false);
-
 		}
 
 		#endregion
-
 	}
 }
