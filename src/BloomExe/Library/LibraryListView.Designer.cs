@@ -39,9 +39,9 @@
 			this._pageThumbnails = new System.Windows.Forms.ImageList(this.components);
 			this.SuspendLayout();
 			//
-			// listView1
+			// _listView
 			//
-			this._listView.BackColor = System.Drawing.Color.Lavender;
+			this._listView.BackColor = System.Drawing.Color.White;
 			this._listView.Dock = System.Windows.Forms.DockStyle.Fill;
 			listViewGroup1.Header = "Our Books";
 			listViewGroup1.Name = "Our Books";
@@ -73,7 +73,7 @@
 			//
 			this._pageThumbnails.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("_pageThumbnails.ImageStream")));
 			this._pageThumbnails.TransparentColor = System.Drawing.Color.Transparent;
-			this._pageThumbnails.Images.SetKeyName(0, "x-office-document.png");
+			this._pageThumbnails.Images.SetKeyName(0, "booklet70x70.png");
 			//
 			// LibraryListView
 			//
