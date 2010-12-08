@@ -81,6 +81,7 @@
 			this._browser1.Name = "_browser1";
 			this._browser1.Size = new System.Drawing.Size(459, 497);
 			this._browser1.TabIndex = 1;
+			this._browser1.OnBrowserClick += new System.EventHandler(this._browser1_OnBrowserClick);
 			this._browser1.Validating += new System.ComponentModel.CancelEventHandler(this._browser1_Validating);
 			//
 			// EditingView
