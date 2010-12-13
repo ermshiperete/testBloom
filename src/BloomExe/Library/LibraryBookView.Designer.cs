@@ -1,6 +1,6 @@
 ﻿namespace Bloom
 {
-	partial class TemplateBookView
+	partial class LibraryBookView
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -54,14 +54,15 @@
 			this._browser.Size = new System.Drawing.Size(897, 417);
 			this._browser.TabIndex = 1;
 			//
-			// TemplateBookView
+			// LibraryBookView
 			//
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this._browser);
 			this.Controls.Add(this._addToLibraryButton);
-			this.Name = "TemplateBookView";
+			this.Name = "LibraryBookView";
 			this.Size = new System.Drawing.Size(900, 450);
+			this.VisibleChanged += new System.EventHandler(this.LibraryBookView_VisibleChanged);
 			this.ResumeLayout(false);
 
 		}
