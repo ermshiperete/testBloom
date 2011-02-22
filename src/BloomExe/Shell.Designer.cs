@@ -41,6 +41,7 @@ namespace Bloom
 			this.ClientSize = new System.Drawing.Size(1012, 512);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "Shell";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Bloom";
 			this.ResumeLayout(false);
 
