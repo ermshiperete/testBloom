@@ -48,9 +48,12 @@
 			this._thumbNailList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
+			this._thumbNailList.BackColor = System.Drawing.SystemColors.Control;
 			this._thumbNailList.Font = new System.Drawing.Font("Tahoma", 9F);
+			this._thumbNailList.ForeColor = System.Drawing.SystemColors.WindowText;
 			this._thumbNailList.Location = new System.Drawing.Point(0, 38);
 			this._thumbNailList.Name = "_thumbNailList";
+			this._thumbNailList.RelocatePageEvent = null;
 			this._thumbNailList.Size = new System.Drawing.Size(155, 140);
 			this._thumbNailList.TabIndex = 2;
 			//
@@ -64,6 +67,7 @@
 			this.Name = "TemplatePagesView";
 			this.Size = new System.Drawing.Size(155, 179);
 			this.BackColorChanged += new System.EventHandler(this.TemplatePagesView_BackColorChanged);
+			this.VisibleChanged += new System.EventHandler(this.TemplatePagesView_VisibleChanged);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
