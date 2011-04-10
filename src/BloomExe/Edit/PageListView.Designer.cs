@@ -61,24 +61,28 @@
 			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.deletePageToolStripMenuItem});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(137, 26);
+			this.contextMenuStrip1.Size = new System.Drawing.Size(153, 48);
+			this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
 			//
 			// deletePageToolStripMenuItem
 			//
 			this.deletePageToolStripMenuItem.Name = "deletePageToolStripMenuItem";
-			this.deletePageToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+			this.deletePageToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.deletePageToolStripMenuItem.Text = "&Delete Page";
 			this.deletePageToolStripMenuItem.Click += new System.EventHandler(this.deletePageToolStripMenuItem_Click);
 			//
-			// thumbNailList1
+			// _thumbNailList
 			//
 			this._thumbNailList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
+			this._thumbNailList.BackColor = System.Drawing.SystemColors.Control;
 			this._thumbNailList.ContextMenuStrip = this.contextMenuStrip1;
 			this._thumbNailList.Font = new System.Drawing.Font("Tahoma", 9F);
+			this._thumbNailList.ForeColor = System.Drawing.SystemColors.WindowText;
 			this._thumbNailList.Location = new System.Drawing.Point(3, 40);
 			this._thumbNailList.Name = "_thumbNailList";
+			this._thumbNailList.RelocatePageEvent = null;
 			this._thumbNailList.Size = new System.Drawing.Size(113, 173);
 			this._thumbNailList.TabIndex = 2;
 			//
