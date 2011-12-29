@@ -41,14 +41,18 @@
 			this._deletePageButton = new System.Windows.Forms.ToolStripButton();
 			this._splitTemplateAndSource = new System.Windows.Forms.SplitContainer();
 			this._editButtonsUpdateTimer = new System.Windows.Forms.Timer(this.components);
+			this._handleMessageTimer = new System.Windows.Forms.Timer(this.components);
 			this._browser1 = new Bloom.Browser();
 			this._translationSourcesControl = new Bloom.Edit.SourceTextControl();
+			((System.ComponentModel.ISupportInitialize)(this._splitContainer1)).BeginInit();
 			this._splitContainer1.Panel2.SuspendLayout();
 			this._splitContainer1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this._splitContainer2)).BeginInit();
 			this._splitContainer2.Panel1.SuspendLayout();
 			this._splitContainer2.Panel2.SuspendLayout();
 			this._splitContainer2.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this._splitTemplateAndSource)).BeginInit();
 			this._splitTemplateAndSource.Panel2.SuspendLayout();
 			this._splitTemplateAndSource.SuspendLayout();
 			this.SuspendLayout();
@@ -184,11 +188,15 @@
 			this._editButtonsUpdateTimer.Enabled = true;
 			this._editButtonsUpdateTimer.Tick += new System.EventHandler(this._editButtonsUpdateTimer_Tick);
 			//
+			// _handleMessageTimer
+			//
+			this._handleMessageTimer.Tick += new System.EventHandler(this._handleMessageTimer_Tick);
+			//
 			// _browser1
 			//
 			this._browser1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this._browser1.BackColor = System.Drawing.Color.DarkGray;
 			this._browser1.Location = new System.Drawing.Point(0, 25);
 			this._browser1.Name = "_browser1";
@@ -215,14 +223,17 @@
 			this.Name = "EditingView";
 			this.Size = new System.Drawing.Size(900, 600);
 			this._splitContainer1.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this._splitContainer1)).EndInit();
 			this._splitContainer1.ResumeLayout(false);
 			this._splitContainer2.Panel1.ResumeLayout(false);
 			this._splitContainer2.Panel1.PerformLayout();
 			this._splitContainer2.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this._splitContainer2)).EndInit();
 			this._splitContainer2.ResumeLayout(false);
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();
 			this._splitTemplateAndSource.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this._splitTemplateAndSource)).EndInit();
 			this._splitTemplateAndSource.ResumeLayout(false);
 			this.ResumeLayout(false);
 
@@ -243,6 +254,7 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripButton _deletePageButton;
 		private System.Windows.Forms.Timer _editButtonsUpdateTimer;
+		private System.Windows.Forms.Timer _handleMessageTimer;
 
 
 	}
