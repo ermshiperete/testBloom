@@ -34,18 +34,19 @@
 			this._editTabPage = new System.Windows.Forms.TabPage();
 			this._publishTabPage = new System.Windows.Forms.TabPage();
 			this._infoTabPage = new System.Windows.Forms.TabPage();
+			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+			this._settingsButton = new System.Windows.Forms.Button();
 			this._infoButton = new System.Windows.Forms.Button();
 			this._openButton1 = new System.Windows.Forms.Button();
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this._tabControl.SuspendLayout();
 			this.SuspendLayout();
 			//
 			// _tabControl
 			//
 			this._tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this._tabControl.Controls.Add(this._libraryTabPage);
 			this._tabControl.Controls.Add(this._editTabPage);
 			this._tabControl.Controls.Add(this._publishTabPage);
@@ -60,7 +61,7 @@
 			this._tabControl.TabIndex = 10;
 			this._tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
 			//
-			// tabPage1
+			// _libraryTabPage
 			//
 			this._libraryTabPage.ImageIndex = 2;
 			this._libraryTabPage.Location = new System.Drawing.Point(4, 44);
@@ -71,7 +72,7 @@
 			this._libraryTabPage.ToolTipText = "View Libaries";
 			this._libraryTabPage.UseVisualStyleBackColor = true;
 			//
-			// tabPage2
+			// _editTabPage
 			//
 			this._editTabPage.ImageIndex = 1;
 			this._editTabPage.Location = new System.Drawing.Point(4, 44);
@@ -82,7 +83,7 @@
 			this._editTabPage.ToolTipText = "Edit Book";
 			this._editTabPage.UseVisualStyleBackColor = true;
 			//
-			// tabPage3
+			// _publishTabPage
 			//
 			this._publishTabPage.ImageIndex = 0;
 			this._publishTabPage.Location = new System.Drawing.Point(4, 44);
@@ -93,7 +94,7 @@
 			this._publishTabPage.ToolTipText = "Publish Book";
 			this._publishTabPage.UseVisualStyleBackColor = true;
 			//
-			// _infoTab
+			// _infoTabPage
 			//
 			this._infoTabPage.Location = new System.Drawing.Point(4, 44);
 			this._infoTabPage.Name = "_infoTabPage";
@@ -101,6 +102,21 @@
 			this._infoTabPage.Size = new System.Drawing.Size(877, 490);
 			this._infoTabPage.TabIndex = 3;
 			this._infoTabPage.UseVisualStyleBackColor = true;
+			//
+			// _settingsButton
+			//
+			this._settingsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this._settingsButton.BackColor = System.Drawing.Color.Transparent;
+			this._settingsButton.FlatAppearance.BorderSize = 0;
+			this._settingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this._settingsButton.Image = global::Bloom.Properties.Resources.settings;
+			this._settingsButton.Location = new System.Drawing.Point(781, 11);
+			this._settingsButton.Name = "_settingsButton";
+			this._settingsButton.Size = new System.Drawing.Size(22, 23);
+			this._settingsButton.TabIndex = 12;
+			this.toolTip1.SetToolTip(this._settingsButton, "Get settingsrmation About Bloom");
+			this._settingsButton.UseVisualStyleBackColor = false;
+			this._settingsButton.Click += new System.EventHandler(this._settingsButton_Click);
 			//
 			// _infoButton
 			//
@@ -147,6 +163,7 @@
 			//
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this._settingsButton);
 			this.Controls.Add(this._infoButton);
 			this.Controls.Add(this._openButton1);
 			this.Controls.Add(this._tabControl);
@@ -165,6 +182,7 @@
 		private System.Windows.Forms.TabPage _publishTabPage;
 		private System.Windows.Forms.ToolStripButton toolStripButton1;
 		private System.Windows.Forms.TabPage _infoTabPage;
+		private System.Windows.Forms.Button _settingsButton;
 		private System.Windows.Forms.Button _infoButton;
 		private System.Windows.Forms.Button _openButton1;
 		private System.Windows.Forms.ToolTip toolTip1;
