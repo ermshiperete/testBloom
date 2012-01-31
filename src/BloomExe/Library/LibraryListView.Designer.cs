@@ -67,6 +67,7 @@
 			this._listView.TabIndex = 1;
 			this._listView.UseCompatibleStateImageBehavior = false;
 			this._listView.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+			this._listView.DoubleClick += new System.EventHandler(this._listView_DoubleClick);
 			this._listView.MouseEnter += new System.EventHandler(this._listView_MouseEnter);
 			//
 			// contextMenuStrip1
