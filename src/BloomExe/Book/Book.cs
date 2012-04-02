@@ -23,6 +23,83 @@ using Palaso.Xml;
 
 namespace Bloom.Book
 {
+	public class ErrorBook : Book
+	{
+		private readonly Exception _exception;
+		private readonly string _folderPath;
+		private bool _canDelete;
+
+		/// <summary>
+		/// this is a bit of a hack to handle representing a book for which we got an exception while loading the storage... a better architecture wouldn't have this...
+		/// </summary>
+		public ErrorBook(Exception exception, string folderPath, bool canDelete)
+		{
+			_exception = exception;
+			_folderPath = folderPath;
+			Id = folderPath;
+			_canDelete = canDelete;
+		}
+
+		public override string Title
+		{
+			get
+			{
+				return Path.GetFileName(FolderPath);//actually gives us the leaf directory name
+			}
+		}
+		public override string FolderPath
+		{
+			get { return _folderPath; }
+		}
+
+		public override bool CanDelete
+		{
+			get { return _canDelete; }
+		}
+
+
+		public override void GetThumbNailOfBookCoverAsync(bool drawBorderDashed, Action<Image> callback)
+		{
+			callback(Resources.Error70x70);
+		}
+
+		public XmlDocument GetEditableHtmlDomForPage(IPage page)
+		{
+			return GetErrorDOM();
+		}
+
+		public override bool CanUpdate
+		{
+			get { return false; }
+		}
+
+		public override bool HasFatalError
+		{
+			get { return true; }
+		}
+		private XmlDocument GetErrorDOM()
+		{
+			var dom = new XmlDocument();
+			var builder = new StringBuilder();
+			builder.Append("<html><body>");
+			builder.AppendLine("<p>This book (" + FolderPath + ") has errors.");
+			builder.AppendLine(
+				"This doesn't mean your work is lost, but it does mean that something is out of date or has gone wrong, and that someone needs to find and fix the problem (and your book).</p>");
+
+			builder.Append(_exception.Message.Replace(Environment.NewLine,"<br/>"));
+
+			builder.Append("</body></html>");
+			dom.LoadXml(builder.ToString());
+			return dom;
+		}
+
+		public override XmlDocument GetPreviewHtmlFileForWholeBook()
+		{
+			return GetErrorDOM();
+		}
+
+	}
+
 	public class Book
 	{
 		//public const string ClassOfHiddenElements = "hideMe"; //"visibility:hidden !important; position:fixed  !important;";
@@ -30,7 +107,6 @@ namespace Bloom.Book
 		public delegate Book Factory(BookStorage storage, bool projectIsEditable);//autofac uses this
 
 		private readonly ITemplateFinder _templateFinder;
-		private readonly IFileLocator _fileLocator;
 		private readonly LibrarySettings _librarySettings;
 
 		private  List<string> _builtInConstants = new List<string>(new[] { "bookTitle", "topic", "nameOfLanguage" });
@@ -55,8 +131,10 @@ namespace Bloom.Book
 		//for moq'ing only
 		public Book(){}
 
+
+
 		public Book(IBookStorage storage, bool projectIsEditable, ITemplateFinder templateFinder,
-			IFileLocator fileLocator, LibrarySettings librarySettings, HtmlThumbNailer thumbnailProvider,
+		   LibrarySettings librarySettings, HtmlThumbNailer thumbnailProvider,
 			PageSelection pageSelection,
 			PageListChangedEvent pageListChangedEvent,
 			BookRefreshEvent bookRefreshEvent)
@@ -64,11 +142,10 @@ namespace Bloom.Book
 			IsInEditableLibrary = projectIsEditable && storage.LooksOk;
 			Id = Guid.NewGuid().ToString();
 			CoverColor = kCoverColors[_coverColorIndex++ % kCoverColors.Length];
+
+			Guard.AgainstNull(storage,"storage");
 			_storage = storage;
 			_templateFinder = templateFinder;
-
-			//the fileLocator we get doesn't know anything about this particular book
-			_fileLocator = fileLocator.CloneAndCustomize(new string[]{storage.FolderPath});
 
 			_librarySettings = librarySettings;
 
@@ -181,7 +258,7 @@ namespace Bloom.Book
 			}
 		}
 
-		public void GetThumbNailOfBookCoverAsync(bool drawBorderDashed, Action<Image> callback)
+		public virtual void GetThumbNailOfBookCoverAsync(bool drawBorderDashed, Action<Image> callback)
 		{
 			try
 			{
@@ -211,7 +288,7 @@ namespace Bloom.Book
 			}
 		}
 
-		public XmlDocument GetEditableHtmlDomForPage(IPage page)
+		public virtual XmlDocument GetEditableHtmlDomForPage(IPage page)
 		{
 			if (_log.ErrorEncountered)
 			{
@@ -220,15 +297,15 @@ namespace Bloom.Book
 
 			XmlDocument dom = GetHtmlDomWithJustOnePage(page);
 			BookStorage.RemoveModeStyleSheets(dom);
-			dom.AddStyleSheet(_fileLocator.LocateFile(@"basePage.css"));
-			dom.AddStyleSheet(_fileLocator.LocateFile(@"editMode.css"));
+			dom.AddStyleSheet(_storage.GetFileLocator().LocateFile(@"basePage.css"));
+			dom.AddStyleSheet(_storage.GetFileLocator().LocateFile(@"editMode.css"));
 			if(LockedExceptForTranslation)
 			{
-				dom.AddStyleSheet(_fileLocator.LocateFile(@"editTranslationMode.css"));
+				dom.AddStyleSheet(_storage.GetFileLocator().LocateFile(@"editTranslationMode.css"));
 			}
 			else
 			{
-				dom.AddStyleSheet(_fileLocator.LocateFile(@"editOriginalMode.css"));
+				dom.AddStyleSheet(_storage.GetFileLocator().LocateFile(@"editOriginalMode.css"));
 			}
 			AddJavaScriptForEditing(dom);
 			AddCoverColor(dom, CoverColor);
@@ -263,7 +340,7 @@ namespace Bloom.Book
 			d.Add("{N2}", _librarySettings.GetNationalLanguage2Name(_librarySettings.NationalLanguage2Iso639Code));
 
 			//REVIEW: this is deviating a bit from the normal use of the dictionary...
-			d.Add("urlOfUIFiles", "file:///"+ _fileLocator.LocateDirectory("ui", "ui files directory"));
+			d.Add("urlOfUIFiles", "file:///"+ _storage.GetFileLocator().LocateDirectory("ui", "ui files directory"));
 
 			dictionaryScriptElement.InnerText = string.Format("function GetDictionary() {{ return {0};}}",JsonConvert.SerializeObject(d));
 
@@ -281,8 +358,8 @@ namespace Bloom.Book
 		private void AddJavaScriptForEditing(XmlDocument dom)
 		{
 			XmlElement head = dom.SelectSingleNodeHonoringDefaultNS("//head") as XmlElement;
-		   // AddJavascriptFile(dom, head, _fileLocator.LocateFile("jquery-1.4.4.min.js"));
-			AddJavascriptFile(dom, head, _fileLocator.LocateFile("bloomBootstrap.js"));
+		   // AddJavascriptFile(dom, head, _storage.GetFileLocator().LocateFile("jquery-1.4.4.min.js"));
+			AddJavascriptFile(dom, head, _storage.GetFileLocator().LocateFile("bloomBootstrap.js"));
 		}
 
 		private void AddJavascriptFile(XmlDocument dom, XmlElement node, string pathToJavascript)
@@ -328,8 +405,8 @@ namespace Bloom.Book
 				return GetErrorDom();
 			}
 			var dom = GetHtmlDomWithJustOnePage(page);
-			dom.AddStyleSheet(_fileLocator.LocateFile(@"basePage.css"));
-			dom.AddStyleSheet(_fileLocator.LocateFile(@"previewMode.css"));
+			dom.AddStyleSheet(_storage.GetFileLocator().LocateFile(@"basePage.css"));
+			dom.AddStyleSheet(_storage.GetFileLocator().LocateFile(@"previewMode.css"));
 			AddCoverColor(dom, CoverColor);
 			AddPreviewJScript(dom);
 
@@ -397,17 +474,18 @@ namespace Bloom.Book
 		private XmlDocument GetBookDomWithStyleSheet(string cssFileName)
 		{
 			XmlDocument dom = (XmlDocument) _storage.GetRelocatableCopyOfDom(_log);
-			dom.AddStyleSheet(_fileLocator.LocateFile(cssFileName));
+			dom.AddStyleSheet(_storage.GetFileLocator().LocateFile(cssFileName));
 			return dom;
 		}
 
+		public virtual string StoragePageFolder { get { return _storage.FolderPath; } }
 
 		private XmlDocument GetPageListingErrorsWithBook(string contents)
 		{
 			var dom = new XmlDocument();
 			var builder = new StringBuilder();
 			builder.Append("<html><body>");
-			builder.AppendLine("<p>This book ("+_storage.FolderPath+") has errors.");
+			builder.AppendLine("<p>This book (" + StoragePageFolder + ") has errors.");
 			builder.AppendLine(
 				"This doesn't mean your work is lost, but it does mean that something is out of date or has gone wrong, and that someone needs to find and fix the problem (and your book).</p>");
 
@@ -425,7 +503,7 @@ namespace Bloom.Book
 			var dom = new XmlDocument();
 			var builder = new StringBuilder();
 			builder.Append("<html><body>");
-			builder.AppendLine("<p>This book (" + _storage.FolderPath + ") has errors.");
+			builder.AppendLine("<p>This book (" + FolderPath + ") has errors.");
 			builder.AppendLine(
 				"This doesn't mean your work is lost, but it does mean that something is out of date or has gone wrong, and that someone needs to find and fix the problem (and your book).</p>");
 
@@ -437,7 +515,7 @@ namespace Bloom.Book
 		}
 
 
-		public bool CanDelete
+		public virtual bool CanDelete
 		{
 			get { return IsInEditableLibrary; }
 		}
@@ -513,7 +591,7 @@ namespace Bloom.Book
 
 		public virtual string Id { get; set; }
 
-		public XmlDocument GetPreviewHtmlFileForWholeBook()
+		public virtual XmlDocument GetPreviewHtmlFileForWholeBook()
 		{
 			if (_log.ErrorEncountered)
 			{
@@ -554,7 +632,7 @@ namespace Bloom.Book
 //now we need the template fields in that xmatter to be updated to this document, this national language, etc.
 			var data = LoadDataSetFromLibrarySettings(false);
 			GatherDataItemsFromDom(data, "*", RawDom);
-			var helper = new XMatterHelper(dom, _librarySettings.XMatterPackName, _fileLocator);
+			var helper = new XMatterHelper(dom, _librarySettings.XMatterPackName, _storage.GetFileLocator());
 			XMatterHelper.RemoveExistingXMatter(dom);
 			var sizeAndOrientation = SizeAndOrientation.GetSizeAndOrientation(dom, "A5Portrait");
 			helper.InjectXMatter(data.WritingSystemCodes, sizeAndOrientation.ToString());
@@ -591,8 +669,12 @@ namespace Bloom.Book
 			get
 			{
 				//default is "true"
-				var node = _storage.Dom.SafeSelectNodes(String.Format("//meta[@name='normallyShowTemplatePages' and @content='false']"));
-				return node.Count ==0;
+				//had this, but it seems impracticle unless bloom takes responsbility for setting it.  I can't remember what motivated it...
+				//	var node = _storage.Dom.SafeSelectNodes(String.Format("//meta[@name='normallyShowTemplatePages' and @content='false']"));
+				//	return node.Count ==0;
+
+				//I know, this is simplistic too... eventually we might need to allow, for example, addition of font/back-matter
+				return !LockedExceptForTranslation;
 			}
 		}
 
@@ -629,7 +711,7 @@ namespace Bloom.Book
 
 
 
-		public bool HasFatalError
+		public virtual bool HasFatalError
 		{
 			get { return _log.ErrorEncountered; }
 		}
@@ -658,6 +740,11 @@ namespace Bloom.Book
 		public string ThumbnailPath
 		{
 			get { return Path.Combine(FolderPath, "thumbnail.png"); }
+		}
+
+		public virtual bool CanUpdate
+		{
+			get { return IsInEditableLibrary; }
 		}
 
 		public void SetMultilingualContentLanguages(string language2Code, string language3Code)
@@ -722,8 +809,8 @@ namespace Bloom.Book
 		private void AddPreviewJScript(XmlDocument dom)
 		{
 //			XmlElement header = (XmlElement)dom.SelectSingleNodeHonoringDefaultNS("//head");
-//			AddJavascriptFile(dom, header, _fileLocator.LocateFile("jquery.js"));
-//			AddJavascriptFile(dom, header, _fileLocator.LocateFile("jquery.myimgscale.js"));
+//			AddJavascriptFile(dom, header, _storage.GetFileLocator().LocateFile("jquery.js"));
+//			AddJavascriptFile(dom, header, _storage.GetFileLocator().LocateFile("jquery.myimgscale.js"));
 //
 //			XmlElement script = dom.CreateElement("script");
 //			script.SetAttribute("type", "text/javascript");
@@ -736,7 +823,7 @@ namespace Bloom.Book
 //			header.AppendChild(script);
 
 			XmlElement head = dom.SelectSingleNodeHonoringDefaultNS("//head") as XmlElement;
-			AddJavascriptFile(dom, head, _fileLocator.LocateFile("bloomPreviewBootstrap.js"));
+			AddJavascriptFile(dom, head, _storage.GetFileLocator().LocateFile("bloomPreviewBootstrap.js"));
 		}
 
 		public IEnumerable<IPage> GetPages()
@@ -1171,7 +1258,7 @@ namespace Bloom.Book
 		/// </summary>
 		private void WriteLanguageDisplayStyleSheet( )
 		{
-			var template = File.ReadAllText(_fileLocator.LocateFile("languageDisplayTemplate.css"));
+			var template = File.ReadAllText(_storage.GetFileLocator().LocateFile("languageDisplayTemplate.css"));
 			var path = _storage.FolderPath.CombineForPath("languageDisplay.css");
 			if (File.Exists(path))
 				File.Delete(path);
@@ -1436,7 +1523,7 @@ namespace Bloom.Book
 		{
 			try
 			{
-				return SizeAndOrientation.GetPageSizeAndOrientationChoices(RawDom, _fileLocator);
+				return SizeAndOrientation.GetPageSizeAndOrientationChoices(RawDom, _storage.GetFileLocator());
 			}
 			catch (Exception error)
 			{

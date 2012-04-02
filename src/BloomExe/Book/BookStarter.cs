@@ -26,7 +26,7 @@ namespace Bloom.Book
 
 		public delegate BookStarter Factory();//autofac uses this
 
-		public BookStarter(IFileLocator fileLocator, BookStorage.Factory bookStorageFactory, LanguageSettings languageSettings, LibrarySettings librarySettings)
+		public BookStarter(IChangeableFileLocator fileLocator, BookStorage.Factory bookStorageFactory, LanguageSettings languageSettings, LibrarySettings librarySettings)
 		{
 			_fileLocator = fileLocator;
 			_bookStorageFactory = bookStorageFactory;
@@ -36,6 +36,11 @@ namespace Bloom.Book
 		}
 
 		public bool TestingSoSkipAddingXMatter { get; set; }
+
+		/// <summary>
+		/// Used in unit testing
+		/// </summary>
+		public bool OnNextRunSimulateFailureMakingBook;
 
 		/// <summary>
 		/// Given a template, make a new book
@@ -63,6 +68,9 @@ namespace Bloom.Book
 
 				//the destination may change here...
 				newBookFolder = SetupNewDocumentContents(newBookFolder);
+
+				if(OnNextRunSimulateFailureMakingBook)
+					throw new ApplicationException("Simulated failure for unit test");
 
 			}
 			catch (Exception)

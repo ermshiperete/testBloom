@@ -49,7 +49,7 @@ namespace Bloom
 				//so we only use it if we don't find the unnumbered alternative.
 				if(!Directory.Exists(xulRunnerPath))
 					xulRunnerPath = Path.Combine(FileLocator.DirectoryOfApplicationOrSolution,
-												 Path.Combine("lib", "xulrunner8"));
+												 Path.Combine("lib", "xulrunner11"));
 
 				//NB: WHEN CHANGING VERSIONS, ALSO CHANGE IN THESE LOCATIONS:
 				// get the new xulrunner, zipped (as it comes from mozilla), onto c:\builddownloads on the palaso teamcity build machine
@@ -99,6 +99,11 @@ namespace Bloom
 			_cutCommand.Enabled = _browser != null && _browser.CanCutSelection;
 			_copyCommand.Enabled = _browser != null && _browser.CanCopySelection;
 			_pasteCommand.Enabled = _browser != null && _browser.CanPaste;
+			if(_pasteCommand.Enabled)
+			{
+				//prevent pasting images (BL-93)
+				_pasteCommand.Enabled = Clipboard.ContainsText();
+			}
 			_undoCommand.Enabled = _browser != null && _browser.CanUndo;
 		}
 

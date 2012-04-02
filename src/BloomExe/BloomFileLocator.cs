@@ -35,6 +35,5 @@ namespace Bloom
 		{
 			return new BloomFileLocator(_librarySettings, _xMatterPackFinder, new List<string>(_searchPaths.Concat(addedSearchPaths)));
 		}
-
 	}
 }

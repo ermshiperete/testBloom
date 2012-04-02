@@ -109,9 +109,30 @@ namespace Bloom.Properties {
 			}
 		}
 
-		internal static System.Drawing.Bitmap Logo27x32 {
+		internal static System.Drawing.Bitmap library16x16 {
 			get {
-				object obj = ResourceManager.GetObject("Logo27x32", resourceCulture);
+				object obj = ResourceManager.GetObject("library16x16", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+
+		internal static System.Drawing.Bitmap library32x32 {
+			get {
+				object obj = ResourceManager.GetObject("library32x32", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+
+		internal static System.Drawing.Bitmap Logo16x16 {
+			get {
+				object obj = ResourceManager.GetObject("Logo16x16", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+
+		internal static System.Drawing.Bitmap Logo217x79 {
+			get {
+				object obj = ResourceManager.GetObject("Logo217x79", resourceCulture);
 				return ((System.Drawing.Bitmap)(obj));
 			}
 		}

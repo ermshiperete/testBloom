@@ -189,10 +189,13 @@ namespace Bloom.Library
 			try
 			{
 				if (_listView.SelectedItems.Count == 0)
+				{
 					return;
+				}
 				Book.Book book = SelectedBook;
 				if (book == null)
 					return;
+				contextMenuStrip1.Enabled = true;
 				Debug.WriteLine("before selecting " + book.Title);
 				_model.SelectBook(book);
 				Debug.WriteLine("after selecting " + book.Title);
@@ -201,8 +204,8 @@ namespace Bloom.Library
 				book.ContentsChanged += new EventHandler(OnContentsOfSelectedBookChanged);
 
 				deleteMenuItem.Enabled = _model.CanDeleteSelection;
-				_updateThumbnailMenu.Visible = _model.CanDeleteSelection;
-				_updateFrontMatterToolStripMenu.Visible = _model.CanDeleteSelection;
+				_updateThumbnailMenu.Visible = _model.CanUpdateSelection;
+				_updateFrontMatterToolStripMenu.Visible = _model.CanUpdateSelection;
 			}
 			catch (Exception err)
 			{
@@ -311,6 +314,11 @@ namespace Bloom.Library
 		private void _openFolderOnDisk_Click(object sender, EventArgs e)
 		{
 			_model.OpenFolderOnDisk();
+		}
+
+		private void _listView_MouseDown(object sender, MouseEventArgs e)
+		{
+			contextMenuStrip1.Enabled = _listView.SelectedItems.Count > 0 && _listView.SelectedItems[0].Tag !=null /*dummy item when collection is empty */;
 		}
 	}
 }
