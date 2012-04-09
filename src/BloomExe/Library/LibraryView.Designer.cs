@@ -29,6 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.SuspendLayout();
 			this.SuspendLayout();
 			//
@@ -38,7 +39,7 @@
 			this.splitContainer1.Location = new System.Drawing.Point(0, 0);
 			this.splitContainer1.Name = "splitContainer1";
 			this.splitContainer1.Size = new System.Drawing.Size(773, 518);
-			this.splitContainer1.SplitterDistance = 257;
+			this.splitContainer1.SplitterDistance = 333;
 			this.splitContainer1.TabIndex = 0;
 			//
 			// LibraryView
@@ -48,6 +49,7 @@
 			this.Name = "LibraryView";
 			this.Size = new System.Drawing.Size(773, 518);
 			this.VisibleChanged += new System.EventHandler(this.LibraryView_VisibleChanged);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
