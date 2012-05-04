@@ -28,19 +28,29 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.label1 = new System.Windows.Forms.Label();
+			this.components = new System.ComponentModel.Container();
+			this._creatingThePdfDocumentLabel = new System.Windows.Forms.Label();
+			this.localizationExtender1 = new Localization.UI.LocalizationExtender(this.components);
+			((System.ComponentModel.ISupportInitialize)(this.localizationExtender1)).BeginInit();
 			this.SuspendLayout();
 			//
-			// label1
+			// _creatingThePdfDocumentLabel
 			//
-			this.label1.AutoSize = true;
-			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label1.Location = new System.Drawing.Point(34, 22);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(219, 20);
-			this.label1.TabIndex = 0;
-			this.label1.Text = "Creating the PDF document...";
-			this.label1.UseWaitCursor = true;
+			this._creatingThePdfDocumentLabel.AutoSize = true;
+			this._creatingThePdfDocumentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.localizationExtender1.SetLocalizableToolTip(this._creatingThePdfDocumentLabel, null);
+			this.localizationExtender1.SetLocalizationComment(this._creatingThePdfDocumentLabel, null);
+			this.localizationExtender1.SetLocalizingId(this._creatingThePdfDocumentLabel, "PleaseWait.label1");
+			this._creatingThePdfDocumentLabel.Location = new System.Drawing.Point(34, 22);
+			this._creatingThePdfDocumentLabel.Name = "_creatingThePdfDocumentLabel";
+			this._creatingThePdfDocumentLabel.Size = new System.Drawing.Size(219, 20);
+			this._creatingThePdfDocumentLabel.TabIndex = 0;
+			this._creatingThePdfDocumentLabel.Text = "Creating the PDF document...";
+			this._creatingThePdfDocumentLabel.UseWaitCursor = true;
+			//
+			// localizationExtender1
+			//
+			this.localizationExtender1.LocalizationManagerId = "Bloom";
 			//
 			// PleaseWait
 			//
@@ -48,7 +58,10 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(290, 75);
 			this.ControlBox = false;
-			this.Controls.Add(this.label1);
+			this.Controls.Add(this._creatingThePdfDocumentLabel);
+			this.localizationExtender1.SetLocalizableToolTip(this, null);
+			this.localizationExtender1.SetLocalizationComment(this, null);
+			this.localizationExtender1.SetLocalizingId(this, "PleaseWait.WindowTitle");
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "PleaseWait";
@@ -58,6 +71,7 @@
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Please Wait...";
 			this.UseWaitCursor = true;
+			((System.ComponentModel.ISupportInitialize)(this.localizationExtender1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -65,6 +79,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label _creatingThePdfDocumentLabel;
+		private Localization.UI.LocalizationExtender localizationExtender1;
 	}
 }
