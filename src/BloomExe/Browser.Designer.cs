@@ -19,7 +19,6 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			this._updateCommandsTimer = new System.Windows.Forms.Timer(this.components);
-			this._setInitialFocusTimer = new System.Windows.Forms.Timer(this.components);
 			this._afterValidatingTimer = new System.Windows.Forms.Timer(this.components);
 			this.SuspendLayout();
 			//
@@ -27,10 +26,6 @@
 			//
 			this._updateCommandsTimer.Enabled = true;
 			this._updateCommandsTimer.Tick += new System.EventHandler(this.OnUpdateDisplayTick);
-			//
-			// _setInitialFocusTimer
-			//
-			this._setInitialFocusTimer.Interval = 500;
 			//
 			// _afterValidatingTimer
 			//
@@ -41,6 +36,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Name = "Browser";
+			this.Resize += new System.EventHandler(this.Browser_Resize);
 			this.ResumeLayout(false);
 
 		}
@@ -48,7 +44,6 @@
 		#endregion
 
 		private System.Windows.Forms.Timer _updateCommandsTimer;
-		private System.Windows.Forms.Timer _setInitialFocusTimer;
 		private System.Windows.Forms.Timer _afterValidatingTimer;
 	}
 }
