@@ -62,6 +62,7 @@
 			this.label9 = new System.Windows.Forms.Label();
 			this._dividerPanel = new System.Windows.Forms.Panel();
 			this._settingsProtectionHelper = new Palaso.UI.WindowsForms.SettingProtection.SettingsProtectionHelper(this.components);
+			this._doChecksAndUpdatesOfAllBooksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStrip1.SuspendLayout();
 			this._sourcePaneMenuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this._localizationExtender)).BeginInit();
@@ -179,12 +180,13 @@
 			//
 			this._vernacularCollectionMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this._showHistoryMenu,
-			this._showNotesMenu});
+			this._showNotesMenu,
+			this._doChecksAndUpdatesOfAllBooksToolStripMenuItem});
 			this._localizationExtender.SetLocalizableToolTip(this._vernacularCollectionMenuStrip, null);
 			this._localizationExtender.SetLocalizationComment(this._vernacularCollectionMenuStrip, null);
 			this._localizationExtender.SetLocalizingId(this._vernacularCollectionMenuStrip, "contextMenuStrip2.contextMenuStrip2");
 			this._vernacularCollectionMenuStrip.Name = "_vernacularCollectionMenuStrip";
-			this._vernacularCollectionMenuStrip.Size = new System.Drawing.Size(179, 70);
+			this._vernacularCollectionMenuStrip.Size = new System.Drawing.Size(266, 92);
 			this._vernacularCollectionMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this._vernacularCollectionMenuStrip_Opening);
 			//
 			// _showHistoryMenu
@@ -194,7 +196,7 @@
 			this._localizationExtender.SetLocalizationPriority(this._showHistoryMenu, Localization.LocalizationPriority.Medium);
 			this._localizationExtender.SetLocalizingId(this._showHistoryMenu, ".showHistoryToolStripMenuItem");
 			this._showHistoryMenu.Name = "_showHistoryMenu";
-			this._showHistoryMenu.Size = new System.Drawing.Size(178, 22);
+			this._showHistoryMenu.Size = new System.Drawing.Size(265, 22);
 			this._showHistoryMenu.Text = "Collection History...";
 			this._showHistoryMenu.Click += new System.EventHandler(this.OnVernacularProjectHistoryClick);
 			//
@@ -205,7 +207,7 @@
 			this._localizationExtender.SetLocalizationComment(this._showNotesMenu, null);
 			this._localizationExtender.SetLocalizingId(this._showNotesMenu, ".showNotesToolStripMenuItem");
 			this._showNotesMenu.Name = "_showNotesMenu";
-			this._showNotesMenu.Size = new System.Drawing.Size(178, 22);
+			this._showNotesMenu.Size = new System.Drawing.Size(265, 22);
 			this._showNotesMenu.Text = "Collection Notes...";
 			this._showNotesMenu.Click += new System.EventHandler(this.OnShowNotesMenu);
 			//
@@ -476,6 +478,16 @@
 			this._dividerPanel.Size = new System.Drawing.Size(350, 1);
 			this._dividerPanel.TabIndex = 6;
 			//
+			// _doChecksAndUpdatesOfAllBooksToolStripMenuItem
+			//
+			this._localizationExtender.SetLocalizableToolTip(this._doChecksAndUpdatesOfAllBooksToolStripMenuItem, null);
+			this._localizationExtender.SetLocalizationComment(this._doChecksAndUpdatesOfAllBooksToolStripMenuItem, null);
+			this._localizationExtender.SetLocalizingId(this._doChecksAndUpdatesOfAllBooksToolStripMenuItem, ".doChecksAndUpdatesOfAllBooksToolStripMenuItem");
+			this._doChecksAndUpdatesOfAllBooksToolStripMenuItem.Name = "_doChecksAndUpdatesOfAllBooksToolStripMenuItem";
+			this._doChecksAndUpdatesOfAllBooksToolStripMenuItem.Size = new System.Drawing.Size(265, 22);
+			this._doChecksAndUpdatesOfAllBooksToolStripMenuItem.Text = "Do Checks and Updates of All Books";
+			this._doChecksAndUpdatesOfAllBooksToolStripMenuItem.Click += new System.EventHandler(this._doChecksAndUpdatesOfAllBooksToolStripMenuItem_Click);
+			//
 			// LibraryListView
 			//
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -538,5 +550,6 @@
 		private System.Windows.Forms.ContextMenuStrip _vernacularCollectionMenuStrip;
 		private System.Windows.Forms.ToolStripMenuItem _showHistoryMenu;
 		private System.Windows.Forms.ToolStripMenuItem _showNotesMenu;
+		private System.Windows.Forms.ToolStripMenuItem _doChecksAndUpdatesOfAllBooksToolStripMenuItem;
 	}
 }
