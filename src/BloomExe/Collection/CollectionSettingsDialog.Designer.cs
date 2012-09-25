@@ -62,6 +62,7 @@
 			this.settingsProtectionLauncherButton1 = new Palaso.UI.WindowsForms.SettingProtection.SettingsProtectionLauncherButton();
 			this.localizationExtender1 = new Localization.UI.LocalizationExtender(this.components);
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+			this._showSendReceive = new System.Windows.Forms.CheckBox();
 			this._tab.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.tabPage2.SuspendLayout();
@@ -453,6 +454,7 @@
 			//
 			// tabPage4
 			//
+			this.tabPage4.Controls.Add(this._showSendReceive);
 			this.tabPage4.Controls.Add(this._useImageServer);
 			this.localizationExtender1.SetLocalizableToolTip(this.tabPage4, null);
 			this.localizationExtender1.SetLocalizationComment(this.tabPage4, null);
@@ -477,6 +479,7 @@
 			this._useImageServer.TabIndex = 0;
 			this._useImageServer.Text = "Use Image Server to reduce memory usage with large images.";
 			this._useImageServer.UseVisualStyleBackColor = true;
+			this._useImageServer.CheckedChanged += new System.EventHandler(this._useImageServer_CheckedChanged_1);
 			//
 			// _okButton
 			//
@@ -524,6 +527,21 @@
 			// localizationExtender1
 			//
 			this.localizationExtender1.LocalizationManagerId = "Bloom";
+			//
+			// _showSendReceive
+			//
+			this._showSendReceive.AutoSize = true;
+			this.localizationExtender1.SetLocalizableToolTip(this._showSendReceive, null);
+			this.localizationExtender1.SetLocalizationComment(this._showSendReceive, null);
+			this.localizationExtender1.SetLocalizationPriority(this._showSendReceive, Localization.LocalizationPriority.Low);
+			this.localizationExtender1.SetLocalizingId(this._showSendReceive, "CollectionSettingsDialog._showSendReceive");
+			this._showSendReceive.Location = new System.Drawing.Point(50, 83);
+			this._showSendReceive.Name = "_showSendReceive";
+			this._showSendReceive.Size = new System.Drawing.Size(281, 23);
+			this._showSendReceive.TabIndex = 1;
+			this._showSendReceive.Text = "(Experimental) Show Send/Receive Button";
+			this._showSendReceive.UseVisualStyleBackColor = true;
+			this._showSendReceive.CheckedChanged += new System.EventHandler(this._showSendReceive_CheckedChanged);
 			//
 			// CollectionSettingsDialog
 			//
@@ -593,5 +611,6 @@
 		private System.Windows.Forms.TabPage tabPage4;
 		private System.Windows.Forms.CheckBox _useImageServer;
 		private System.Windows.Forms.ToolTip toolTip1;
+		private System.Windows.Forms.CheckBox _showSendReceive;
 	}
 }
