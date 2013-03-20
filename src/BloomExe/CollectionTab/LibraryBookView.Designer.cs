@@ -46,7 +46,7 @@
 			this._addToCollectionButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.localizationExtender1.SetLocalizableToolTip(this._addToCollectionButton, null);
 			this.localizationExtender1.SetLocalizationComment(this._addToCollectionButton, null);
-			this.localizationExtender1.SetLocalizingId(this._addToCollectionButton, "CollectionTab._addToLibraryButton");
+			this.localizationExtender1.SetLocalizingId(this._addToCollectionButton, "CollectionTab.MakeBookUsingThisTemplate");
 			this._addToCollectionButton.Location = new System.Drawing.Point(12, 3);
 			this._addToCollectionButton.Name = "_addToCollectionButton";
 			this._addToCollectionButton.Size = new System.Drawing.Size(250, 42);
