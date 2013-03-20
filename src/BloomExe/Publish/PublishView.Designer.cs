@@ -95,7 +95,7 @@
 			this._saveButton.Image = global::Bloom.Properties.Resources.Usb;
 			this.localizationExtender1.SetLocalizableToolTip(this._saveButton, null);
 			this.localizationExtender1.SetLocalizationComment(this._saveButton, null);
-			this.localizationExtender1.SetLocalizingId(this._saveButton, "PublishView.SaveButton");
+			this.localizationExtender1.SetLocalizingId(this._saveButton, "PublishTab.SaveButton");
 			this._saveButton.Location = new System.Drawing.Point(108, 0);
 			this._saveButton.Name = "_saveButton";
 			this._saveButton.Size = new System.Drawing.Size(185, 71);
@@ -116,7 +116,7 @@
 			this._printButton.Image = global::Bloom.Properties.Resources.print;
 			this.localizationExtender1.SetLocalizableToolTip(this._printButton, null);
 			this.localizationExtender1.SetLocalizationComment(this._printButton, null);
-			this.localizationExtender1.SetLocalizingId(this._printButton, "PublishView.PrintButton");
+			this.localizationExtender1.SetLocalizingId(this._printButton, "PublishTab.PrintButton");
 			this._printButton.Location = new System.Drawing.Point(0, 0);
 			this._printButton.Name = "_printButton";
 			this._printButton.Size = new System.Drawing.Size(105, 64);
@@ -164,7 +164,7 @@
 			this.localizationExtender1.SetLocalizableToolTip(this._openinBrowserMenuItem, null);
 			this.localizationExtender1.SetLocalizationComment(this._openinBrowserMenuItem, null);
 			this.localizationExtender1.SetLocalizationPriority(this._openinBrowserMenuItem, Localization.LocalizationPriority.Low);
-			this.localizationExtender1.SetLocalizingId(this._openinBrowserMenuItem, ".openHtmlInBrowserToolStripMenuItem");
+			this.localizationExtender1.SetLocalizingId(this._openinBrowserMenuItem, "EditTab.BookContextMenu.openHtmlInBrowser");
 			this._openinBrowserMenuItem.Name = "_openinBrowserMenuItem";
 			this._openinBrowserMenuItem.Size = new System.Drawing.Size(334, 22);
 			this._openinBrowserMenuItem.Text = "Open the Html used to make this PDF, in Browser";
@@ -182,7 +182,7 @@
 			this._menusToolStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
 			this.localizationExtender1.SetLocalizableToolTip(this._menusToolStrip, null);
 			this.localizationExtender1.SetLocalizationComment(this._menusToolStrip, null);
-			this.localizationExtender1.SetLocalizingId(this._menusToolStrip, "EditingView._menusToolStrip");
+			this.localizationExtender1.SetLocalizingId(this._menusToolStrip, "EditTab._menusToolStrip");
 			this._menusToolStrip.Location = new System.Drawing.Point(0, 0);
 			this._menusToolStrip.Name = "_menusToolStrip";
 			this._menusToolStrip.Size = new System.Drawing.Size(100, 47);
@@ -208,7 +208,7 @@
 			this._bodyRadio.Image = global::Bloom.Properties.Resources.insideBookletPages;
 			this.localizationExtender1.SetLocalizableToolTip(this._bodyRadio, null);
 			this.localizationExtender1.SetLocalizationComment(this._bodyRadio, null);
-			this.localizationExtender1.SetLocalizingId(this._bodyRadio, "PublishView.BodyOnlyRadio");
+			this.localizationExtender1.SetLocalizingId(this._bodyRadio, "PublishTab.BodyOnlyRadio");
 			this._bodyRadio.Location = new System.Drawing.Point(3, 50);
 			this._bodyRadio.Name = "_bodyRadio";
 			this._bodyRadio.Size = new System.Drawing.Size(94, 106);
@@ -235,7 +235,7 @@
 			this._coverRadio.Image = global::Bloom.Properties.Resources.coverOnly;
 			this.localizationExtender1.SetLocalizableToolTip(this._coverRadio, null);
 			this.localizationExtender1.SetLocalizationComment(this._coverRadio, null);
-			this.localizationExtender1.SetLocalizingId(this._coverRadio, "PublishView.CoverOnlyRadio");
+			this.localizationExtender1.SetLocalizingId(this._coverRadio, "PublishTab.CoverOnlyRadio");
 			this._coverRadio.Location = new System.Drawing.Point(3, 162);
 			this._coverRadio.Name = "_coverRadio";
 			this._coverRadio.Size = new System.Drawing.Size(94, 91);
@@ -261,7 +261,7 @@
 			this._noBookletRadio.Image = global::Bloom.Properties.Resources.simplePages;
 			this.localizationExtender1.SetLocalizableToolTip(this._noBookletRadio, null);
 			this.localizationExtender1.SetLocalizationComment(this._noBookletRadio, "Instead of making a booklet, just make normal pages");
-			this.localizationExtender1.SetLocalizingId(this._noBookletRadio, "PublishView.OnPagePerPaperRadio");
+			this.localizationExtender1.SetLocalizingId(this._noBookletRadio, "PublishTab.OnPagePerPaperRadio");
 			this._noBookletRadio.Location = new System.Drawing.Point(3, 259);
 			this._noBookletRadio.Name = "_noBookletRadio";
 			this._noBookletRadio.Size = new System.Drawing.Size(94, 108);

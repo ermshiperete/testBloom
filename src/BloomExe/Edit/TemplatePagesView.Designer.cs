@@ -29,20 +29,30 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.label1 = new System.Windows.Forms.Label();
+			this.localizationExtender1 = new Localization.UI.LocalizationExtender(this.components);
 			this._thumbNailList = new Bloom.Edit.ThumbNailList();
+			((System.ComponentModel.ISupportInitialize)(this.localizationExtender1)).BeginInit();
 			this.SuspendLayout();
 			//
 			// label1
 			//
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label1.ForeColor =Palette.TextAgainstDarkBackground;
+			this.label1.ForeColor = System.Drawing.Color.WhiteSmoke;
+			this.localizationExtender1.SetLocalizableToolTip(this.label1, null);
+			this.localizationExtender1.SetLocalizationComment(this.label1, null);
+			this.localizationExtender1.SetLocalizingId(this.label1, "EditTab.TemplatePagesList.Heading");
 			this.label1.Location = new System.Drawing.Point(2, 7);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(129, 18);
 			this.label1.TabIndex = 1;
 			this.label1.Text = "Template Pages";
+			//
+			// localizationExtender1
+			//
+			this.localizationExtender1.LocalizationManagerId = "Bloom";
 			//
 			// _thumbNailList
 			//
@@ -53,8 +63,12 @@
 			this._thumbNailList.Font = new System.Drawing.Font("Tahoma", 9F);
 			this._thumbNailList.ForeColor = System.Drawing.SystemColors.WindowText;
 			this._thumbNailList.ItemWhichWouldPrecedeANewPageInsertion = null;
+			this.localizationExtender1.SetLocalizableToolTip(this._thumbNailList, null);
+			this.localizationExtender1.SetLocalizationComment(this._thumbNailList, null);
+			this.localizationExtender1.SetLocalizingId(this._thumbNailList, "TemplatePagesView.ThumbNailList");
 			this._thumbNailList.Location = new System.Drawing.Point(0, 38);
 			this._thumbNailList.Name = "_thumbNailList";
+			this._thumbNailList.PreferPageNumbers = false;
 			this._thumbNailList.RelocatePageEvent = null;
 			this._thumbNailList.Size = new System.Drawing.Size(155, 140);
 			this._thumbNailList.TabIndex = 2;
@@ -66,9 +80,13 @@
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
 			this.Controls.Add(this._thumbNailList);
 			this.Controls.Add(this.label1);
+			this.localizationExtender1.SetLocalizableToolTip(this, null);
+			this.localizationExtender1.SetLocalizationComment(this, null);
+			this.localizationExtender1.SetLocalizingId(this, "EditTab.TemplatePagesList");
 			this.Name = "TemplatePagesView";
 			this.Size = new System.Drawing.Size(155, 179);
 			this.BackColorChanged += new System.EventHandler(this.TemplatePagesView_BackColorChanged);
+			((System.ComponentModel.ISupportInitialize)(this.localizationExtender1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -78,5 +96,6 @@
 
 		private System.Windows.Forms.Label label1;
 		private Bloom.Edit.ThumbNailList _thumbNailList;
+		private Localization.UI.LocalizationExtender localizationExtender1;
 	}
 }

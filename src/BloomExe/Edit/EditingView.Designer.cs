@@ -34,6 +34,10 @@
 			System.Drawing.Imaging.ImageAttributes imageAttributes3 = new System.Drawing.Imaging.ImageAttributes();
 			System.Drawing.Imaging.ImageAttributes imageAttributes4 = new System.Drawing.Imaging.ImageAttributes();
 			System.Drawing.Imaging.ImageAttributes imageAttributes5 = new System.Drawing.Imaging.ImageAttributes();
+			this._editButtonsUpdateTimer = new System.Windows.Forms.Timer(this.components);
+			this._handleMessageTimer = new System.Windows.Forms.Timer(this.components);
+			this.settingsLauncherHelper1 = new Palaso.UI.WindowsForms.SettingProtection.SettingsProtectionHelper(this.components);
+			this.localizationExtender1 = new Localization.UI.LocalizationExtender(this.components);
 			this._splitContainer1 = new Bloom.ToPalaso.BetterSplitContainer(this.components);
 			this._splitContainer2 = new Bloom.ToPalaso.BetterSplitContainer(this.components);
 			this._topBarPanel = new System.Windows.Forms.Panel();
@@ -47,11 +51,8 @@
 			this._layoutChoices = new System.Windows.Forms.ToolStripDropDownButton();
 			this._browser1 = new Bloom.Browser();
 			this._splitTemplateAndSource = new Bloom.ToPalaso.BetterSplitContainer(this.components);
-			this._editButtonsUpdateTimer = new System.Windows.Forms.Timer(this.components);
-			this._handleMessageTimer = new System.Windows.Forms.Timer(this.components);
-			this.settingsLauncherHelper1 = new Palaso.UI.WindowsForms.SettingProtection.SettingsProtectionHelper(this.components);
-			this.localizationExtender1 = new Localization.UI.LocalizationExtender(this.components);
 			this.betterToolTip1 = new Bloom.ToPalaso.BetterToolTip(this.components);
+			((System.ComponentModel.ISupportInitialize)(this.localizationExtender1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this._splitContainer1)).BeginInit();
 			this._splitContainer1.Panel2.SuspendLayout();
 			this._splitContainer1.SuspendLayout();
@@ -63,8 +64,20 @@
 			this._menusToolStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this._splitTemplateAndSource)).BeginInit();
 			this._splitTemplateAndSource.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.localizationExtender1)).BeginInit();
 			this.SuspendLayout();
+			//
+			// _editButtonsUpdateTimer
+			//
+			this._editButtonsUpdateTimer.Enabled = true;
+			this._editButtonsUpdateTimer.Tick += new System.EventHandler(this._editButtonsUpdateTimer_Tick);
+			//
+			// _handleMessageTimer
+			//
+			this._handleMessageTimer.Tick += new System.EventHandler(this._handleMessageTimer_Tick);
+			//
+			// localizationExtender1
+			//
+			this.localizationExtender1.LocalizationManagerId = "Bloom";
 			//
 			// _splitContainer1
 			//
@@ -73,7 +86,7 @@
 			this._splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
 			this.localizationExtender1.SetLocalizableToolTip(this._splitContainer1, null);
 			this.localizationExtender1.SetLocalizationComment(this._splitContainer1, null);
-			this.localizationExtender1.SetLocalizingId(this._splitContainer1, "EditingView._splitContainer1");
+			this.localizationExtender1.SetLocalizingId(this._splitContainer1, "EditTab._splitContainer1");
 			this._splitContainer1.Location = new System.Drawing.Point(0, 0);
 			this._splitContainer1.Margin = new System.Windows.Forms.Padding(4);
 			this._splitContainer1.Name = "_splitContainer1";
@@ -85,7 +98,7 @@
 			// _splitContainer1.Panel2
 			//
 			this._splitContainer1.Panel2.Controls.Add(this._splitContainer2);
-			this._splitContainer1.Size = new System.Drawing.Size(1200, 738);
+			this._splitContainer1.Size = new System.Drawing.Size(1200, 561);
 			this._splitContainer1.SplitterDistance = 250;
 			this._splitContainer1.SplitterWidth = 10;
 			this._splitContainer1.TabIndex = 0;
@@ -96,7 +109,7 @@
 			this._splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.localizationExtender1.SetLocalizableToolTip(this._splitContainer2, null);
 			this.localizationExtender1.SetLocalizationComment(this._splitContainer2, null);
-			this.localizationExtender1.SetLocalizingId(this._splitContainer2, "EditingView._splitContainer2");
+			this.localizationExtender1.SetLocalizingId(this._splitContainer2, "EditTab._splitContainer2");
 			this._splitContainer2.Location = new System.Drawing.Point(0, 0);
 			this._splitContainer2.Margin = new System.Windows.Forms.Padding(4);
 			this._splitContainer2.Name = "_splitContainer2";
@@ -110,7 +123,7 @@
 			//
 			this._splitContainer2.Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(63)))), ((int)(((byte)(64)))));
 			this._splitContainer2.Panel2.Controls.Add(this._splitTemplateAndSource);
-			this._splitContainer2.Size = new System.Drawing.Size(940, 738);
+			this._splitContainer2.Size = new System.Drawing.Size(940, 561);
 			this._splitContainer2.SplitterDistance = 785;
 			this._splitContainer2.SplitterWidth = 10;
 			this._splitContainer2.TabIndex = 0;
@@ -155,7 +168,7 @@
 			this._deletePageButton.InnerBorderColor_MouseOver = System.Drawing.Color.Gold;
 			this.localizationExtender1.SetLocalizableToolTip(this._deletePageButton, null);
 			this.localizationExtender1.SetLocalizationComment(this._deletePageButton, null);
-			this.localizationExtender1.SetLocalizingId(this._deletePageButton, "EditingView._deletePageButton");
+			this.localizationExtender1.SetLocalizingId(this._deletePageButton, "EditTab._deletePageButton");
 			this._deletePageButton.Location = new System.Drawing.Point(193, 3);
 			this._deletePageButton.Name = "_deletePageButton";
 			this._deletePageButton.OffsetPressedContent = true;
@@ -196,7 +209,7 @@
 			this._undoButton.InnerBorderColor_MouseOver = System.Drawing.Color.Gold;
 			this.localizationExtender1.SetLocalizableToolTip(this._undoButton, null);
 			this.localizationExtender1.SetLocalizationComment(this._undoButton, null);
-			this.localizationExtender1.SetLocalizingId(this._undoButton, "EditingView._undoButton");
+			this.localizationExtender1.SetLocalizingId(this._undoButton, "EditTab._undoButton");
 			this._undoButton.Location = new System.Drawing.Point(129, 0);
 			this._undoButton.Name = "_undoButton";
 			this._undoButton.OffsetPressedContent = true;
@@ -236,7 +249,7 @@
 			this._cutButton.InnerBorderColor_MouseOver = System.Drawing.Color.Gold;
 			this.localizationExtender1.SetLocalizableToolTip(this._cutButton, null);
 			this.localizationExtender1.SetLocalizationComment(this._cutButton, null);
-			this.localizationExtender1.SetLocalizingId(this._cutButton, "EditingView._cutButton");
+			this.localizationExtender1.SetLocalizingId(this._cutButton, "EditTab._cutButton");
 			this._cutButton.Location = new System.Drawing.Point(52, 7);
 			this._cutButton.Name = "_cutButton";
 			this._cutButton.OffsetPressedContent = true;
@@ -276,7 +289,7 @@
 			this._pasteButton.InnerBorderColor_MouseOver = System.Drawing.Color.Gold;
 			this.localizationExtender1.SetLocalizableToolTip(this._pasteButton, null);
 			this.localizationExtender1.SetLocalizationComment(this._pasteButton, null);
-			this.localizationExtender1.SetLocalizingId(this._pasteButton, "EditingView._pasteButton");
+			this.localizationExtender1.SetLocalizingId(this._pasteButton, "EditTab._pasteButton");
 			this._pasteButton.Location = new System.Drawing.Point(2, 5);
 			this._pasteButton.Name = "_pasteButton";
 			this._pasteButton.OffsetPressedContent = true;
@@ -317,7 +330,7 @@
 			this._copyButton.InnerBorderColor_MouseOver = System.Drawing.Color.Gold;
 			this.localizationExtender1.SetLocalizableToolTip(this._copyButton, null);
 			this.localizationExtender1.SetLocalizationComment(this._copyButton, null);
-			this.localizationExtender1.SetLocalizingId(this._copyButton, "EditingView._copyButton");
+			this.localizationExtender1.SetLocalizingId(this._copyButton, "EditTab._copyButton");
 			this._copyButton.Location = new System.Drawing.Point(52, 29);
 			this._copyButton.Name = "_copyButton";
 			this._copyButton.OffsetPressedContent = true;
@@ -342,7 +355,7 @@
 			this._menusToolStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
 			this.localizationExtender1.SetLocalizableToolTip(this._menusToolStrip, null);
 			this.localizationExtender1.SetLocalizationComment(this._menusToolStrip, null);
-			this.localizationExtender1.SetLocalizingId(this._menusToolStrip, "EditingView._menusToolStrip");
+			this.localizationExtender1.SetLocalizingId(this._menusToolStrip, "EditTab._menusToolStrip");
 			this._menusToolStrip.Location = new System.Drawing.Point(294, 20);
 			this._menusToolStrip.Name = "_menusToolStrip";
 			this._menusToolStrip.Size = new System.Drawing.Size(165, 42);
@@ -356,7 +369,7 @@
 			this._contentLanguagesDropdown.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.localizationExtender1.SetLocalizableToolTip(this._contentLanguagesDropdown, null);
 			this.localizationExtender1.SetLocalizationComment(this._contentLanguagesDropdown, null);
-			this.localizationExtender1.SetLocalizingId(this._contentLanguagesDropdown, "._contentLanguagesDropdown");
+			this.localizationExtender1.SetLocalizingId(this._contentLanguagesDropdown, "EditTab._contentLanguagesDropdown");
 			this._contentLanguagesDropdown.Name = "_contentLanguagesDropdown";
 			this._contentLanguagesDropdown.Size = new System.Drawing.Size(129, 19);
 			this._contentLanguagesDropdown.Text = "Multilingual Settings";
@@ -370,7 +383,7 @@
 			this.localizationExtender1.SetLocalizableToolTip(this._layoutChoices, null);
 			this.localizationExtender1.SetLocalizationComment(this._layoutChoices, null);
 			this.localizationExtender1.SetLocalizationPriority(this._layoutChoices, Localization.LocalizationPriority.NotLocalizable);
-			this.localizationExtender1.SetLocalizingId(this._layoutChoices, "._layoutChoices");
+			this.localizationExtender1.SetLocalizingId(this._layoutChoices, "EditTab._layoutChoices");
 			this._layoutChoices.Name = "_layoutChoices";
 			this._layoutChoices.Size = new System.Drawing.Size(50, 19);
 			this._layoutChoices.Text = "Paper";
@@ -384,11 +397,11 @@
 			this._browser1.BackColor = System.Drawing.Color.DarkGray;
 			this.localizationExtender1.SetLocalizableToolTip(this._browser1, null);
 			this.localizationExtender1.SetLocalizationComment(this._browser1, null);
-			this.localizationExtender1.SetLocalizingId(this._browser1, "EditingView.Browser");
+			this.localizationExtender1.SetLocalizingId(this._browser1, "EditTab.Browser");
 			this._browser1.Location = new System.Drawing.Point(0, 0);
 			this._browser1.Margin = new System.Windows.Forms.Padding(5);
 			this._browser1.Name = "_browser1";
-			this._browser1.Size = new System.Drawing.Size(785, 742);
+			this._browser1.Size = new System.Drawing.Size(785, 565);
 			this._browser1.TabIndex = 1;
 			this._browser1.OnBrowserClick += new System.EventHandler(this._browser1_OnBrowserClick);
 			//
@@ -398,7 +411,7 @@
 			this._splitTemplateAndSource.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.localizationExtender1.SetLocalizableToolTip(this._splitTemplateAndSource, null);
 			this.localizationExtender1.SetLocalizationComment(this._splitTemplateAndSource, null);
-			this.localizationExtender1.SetLocalizingId(this._splitTemplateAndSource, "EditingView._splitTemplateAndSource");
+			this.localizationExtender1.SetLocalizingId(this._splitTemplateAndSource, "EditTab._splitTemplateAndSource");
 			this._splitTemplateAndSource.Location = new System.Drawing.Point(0, 0);
 			this._splitTemplateAndSource.Margin = new System.Windows.Forms.Padding(4);
 			this._splitTemplateAndSource.Name = "_splitTemplateAndSource";
@@ -411,24 +424,11 @@
 			// _splitTemplateAndSource.Panel2
 			//
 			this._splitTemplateAndSource.Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-			this._splitTemplateAndSource.Size = new System.Drawing.Size(145, 738);
-			this._splitTemplateAndSource.SplitterDistance = 303;
+			this._splitTemplateAndSource.Size = new System.Drawing.Size(145, 561);
+			this._splitTemplateAndSource.SplitterDistance = 230;
 			this._splitTemplateAndSource.SplitterWidth = 10;
 			this._splitTemplateAndSource.TabIndex = 0;
 			this._splitTemplateAndSource.TabStop = false;
-			//
-			// _editButtonsUpdateTimer
-			//
-			this._editButtonsUpdateTimer.Enabled = true;
-			this._editButtonsUpdateTimer.Tick += new System.EventHandler(this._editButtonsUpdateTimer_Tick);
-			//
-			// _handleMessageTimer
-			//
-			this._handleMessageTimer.Tick += new System.EventHandler(this._handleMessageTimer_Tick);
-			//
-			// localizationExtender1
-			//
-			this.localizationExtender1.LocalizationManagerId = "Bloom";
 			//
 			// EditingView
 			//
@@ -436,11 +436,12 @@
 			this.Controls.Add(this._splitContainer1);
 			this.localizationExtender1.SetLocalizableToolTip(this, null);
 			this.localizationExtender1.SetLocalizationComment(this, null);
-			this.localizationExtender1.SetLocalizingId(this, "EditingView.EditingView");
+			this.localizationExtender1.SetLocalizingId(this, "EditTab.EditingView");
 			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "EditingView";
-			this.Size = new System.Drawing.Size(1200, 738);
+			this.Size = new System.Drawing.Size(1200, 561);
 			this.Load += new System.EventHandler(this.EditingView_Load);
+			((System.ComponentModel.ISupportInitialize)(this.localizationExtender1)).EndInit();
 			this._splitContainer1.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this._splitContainer1)).EndInit();
 			this._splitContainer1.ResumeLayout(false);
@@ -453,7 +454,6 @@
 			this._menusToolStrip.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this._splitTemplateAndSource)).EndInit();
 			this._splitTemplateAndSource.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.localizationExtender1)).EndInit();
 			this.ResumeLayout(false);
 
 		}
