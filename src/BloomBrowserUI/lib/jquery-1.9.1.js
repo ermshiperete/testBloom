@@ -536,6 +536,7 @@ jQuery.extend({
 	},
 
 	parseJSON: function( data ) {
+
 		// Attempt to parse using the native JSON parser first
 		if ( window.JSON && window.JSON.parse ) {
 			return window.JSON.parse( data );
