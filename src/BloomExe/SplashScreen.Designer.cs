@@ -60,7 +60,6 @@
 			this.label1.Size = new System.Drawing.Size(300, 48);
 			this.label1.TabIndex = 1;
 			this.label1.Text = "Thanks for trying out this Beta Test version of Bloom.";
-			this.label1.Click += new System.EventHandler(this.label1_Click);
 			//
 			// _fadeOutTimer
 			//
@@ -106,6 +105,7 @@
 			this.Name = "SplashScreen";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Bloom";
+			this.Load += new System.EventHandler(this.SplashScreen_Load);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
 			this.ResumeLayout(false);
