@@ -90,7 +90,7 @@
 			this._tab.Location = new System.Drawing.Point(1, 2);
 			this._tab.Name = "_tab";
 			this._tab.SelectedIndex = 0;
-			this._tab.Size = new System.Drawing.Size(618, 348);
+			this._tab.Size = new System.Drawing.Size(618, 341);
 			this._tab.TabIndex = 0;
 			//
 			// tabPage1
@@ -112,7 +112,7 @@
 			this.tabPage1.Location = new System.Drawing.Point(4, 26);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(610, 318);
+			this.tabPage1.Size = new System.Drawing.Size(610, 311);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "Languages";
 			this.tabPage1.UseVisualStyleBackColor = true;
@@ -162,7 +162,7 @@
 			this._changeLanguage3Link.TabIndex = 17;
 			this._changeLanguage3Link.TabStop = true;
 			this._changeLanguage3Link.Text = "Change...";
-			this._changeLanguage3Link.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this._national2ChangeLink_LinkClicked);
+			this._changeLanguage3Link.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this._language3ChangeLink_LinkClicked);
 			//
 			// _changeLanguage2Link
 			//
@@ -176,7 +176,7 @@
 			this._changeLanguage2Link.TabIndex = 16;
 			this._changeLanguage2Link.TabStop = true;
 			this._changeLanguage2Link.Text = "Change...";
-			this._changeLanguage2Link.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this._national1ChangeLink_LinkClicked);
+			this._changeLanguage2Link.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this._language2ChangeLink_LinkClicked);
 			//
 			// _changeLanguage1Link
 			//
@@ -190,7 +190,7 @@
 			this._changeLanguage1Link.TabIndex = 15;
 			this._changeLanguage1Link.TabStop = true;
 			this._changeLanguage1Link.Text = "Change...";
-			this._changeLanguage1Link.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this._vernacularChangeLink_LinkClicked);
+			this._changeLanguage1Link.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this._language1ChangeLink_LinkClicked);
 			//
 			// _language3Name
 			//
@@ -568,9 +568,9 @@
 			this._L10NSharpExtender.SetLocalizableToolTip(this._okButton, null);
 			this._L10NSharpExtender.SetLocalizationComment(this._okButton, null);
 			this._L10NSharpExtender.SetLocalizingId(this._okButton, "Common.OKButton");
-			this._okButton.Location = new System.Drawing.Point(438, 383);
+			this._okButton.Location = new System.Drawing.Point(422, 393);
 			this._okButton.Name = "_okButton";
-			this._okButton.Size = new System.Drawing.Size(75, 23);
+			this._okButton.Size = new System.Drawing.Size(91, 23);
 			this._okButton.TabIndex = 1;
 			this._okButton.Text = "&OK";
 			this._okButton.UseVisualStyleBackColor = true;
@@ -581,13 +581,14 @@
 			this._restartReminder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this._restartReminder.AutoSize = true;
 			this._restartReminder.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this._restartReminder.ForeColor = System.Drawing.Color.Green;
+			this._restartReminder.ForeColor = System.Drawing.Color.Firebrick;
 			this._L10NSharpExtender.SetLocalizableToolTip(this._restartReminder, null);
 			this._L10NSharpExtender.SetLocalizationComment(this._restartReminder, null);
 			this._L10NSharpExtender.SetLocalizingId(this._restartReminder, "CollectionSettingsDialog._restartMessage");
-			this._restartReminder.Location = new System.Drawing.Point(33, 386);
+			this._restartReminder.Location = new System.Drawing.Point(273, 348);
+			this._restartReminder.MaximumSize = new System.Drawing.Size(380, 0);
 			this._restartReminder.Name = "_restartReminder";
-			this._restartReminder.Size = new System.Drawing.Size(399, 17);
+			this._restartReminder.Size = new System.Drawing.Size(346, 34);
 			this._restartReminder.TabIndex = 19;
 			this._restartReminder.Text = "Bloom will close and re-open this project with the new settings.";
 			this._restartReminder.Visible = false;
@@ -604,7 +605,7 @@
 			this._L10NSharpExtender.SetLocalizableToolTip(this._cancelButton, null);
 			this._L10NSharpExtender.SetLocalizationComment(this._cancelButton, null);
 			this._L10NSharpExtender.SetLocalizingId(this._cancelButton, "Common.CancelButton");
-			this._cancelButton.Location = new System.Drawing.Point(533, 383);
+			this._cancelButton.Location = new System.Drawing.Point(533, 393);
 			this._cancelButton.Name = "_cancelButton";
 			this._cancelButton.Size = new System.Drawing.Size(75, 23);
 			this._cancelButton.TabIndex = 21;
@@ -618,10 +619,10 @@
 			this._L10NSharpExtender.SetLocalizableToolTip(this.settingsProtectionLauncherButton1, null);
 			this._L10NSharpExtender.SetLocalizationComment(this.settingsProtectionLauncherButton1, null);
 			this._L10NSharpExtender.SetLocalizingId(this.settingsProtectionLauncherButton1, "CollectionSettingsDialog.SettingsProtectionLauncherButton");
-			this.settingsProtectionLauncherButton1.Location = new System.Drawing.Point(13, 350);
+			this.settingsProtectionLauncherButton1.Location = new System.Drawing.Point(13, 345);
 			this.settingsProtectionLauncherButton1.Margin = new System.Windows.Forms.Padding(0);
 			this.settingsProtectionLauncherButton1.Name = "settingsProtectionLauncherButton1";
-			this.settingsProtectionLauncherButton1.Size = new System.Drawing.Size(419, 37);
+			this.settingsProtectionLauncherButton1.Size = new System.Drawing.Size(257, 37);
 			this.settingsProtectionLauncherButton1.TabIndex = 20;
 			//
 			// CollectionSettingsDialog
@@ -630,7 +631,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this._cancelButton;
-			this.ClientSize = new System.Drawing.Size(620, 421);
+			this.ClientSize = new System.Drawing.Size(620, 431);
 			this.ControlBox = false;
 			this.Controls.Add(this._cancelButton);
 			this.Controls.Add(this.settingsProtectionLauncherButton1);
