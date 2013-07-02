@@ -2,20 +2,20 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Forms;
 using Bloom.Collection;
 using Bloom.CollectionTab;
 using Bloom.Edit;
+using Bloom.Library;
 using Bloom.Properties;
 using Bloom.Publish;
 using Chorus;
 using Chorus.UI.Sync;
 using L10NSharp;
 using Messir.Windows.Forms;
-using NetSparkle;
 using Palaso.IO;
 using Palaso.Reporting;
-using Palaso.UI.WindowsForms.ReleaseNotes;
 using Palaso.UI.WindowsForms.SettingProtection;
 
 namespace Bloom.Workspace
@@ -34,7 +34,7 @@ namespace Bloom.Workspace
 		private Control _previouslySelectedControl;
 		public event EventHandler CloseCurrentProject;
 		public event EventHandler ReopenCurrentProject;
-		private Sparkle _sparkleApplicationUpdater;
+
 		private readonly LocalizationManager _localizationManager;
 
 		public delegate WorkspaceView Factory(Control libraryView);
@@ -52,7 +52,6 @@ namespace Bloom.Workspace
 							SelectedTabChangedEvent selectedTabChangedEvent,
 							 FeedbackDialog.Factory feedbackDialogFactory,
 							ChorusSystem chorusSystem,
-							Sparkle sparkleApplicationUpdater,
 							LocalizationManager localizationManager
 
 			)
@@ -63,12 +62,9 @@ namespace Bloom.Workspace
 			_selectedTabChangedEvent = selectedTabChangedEvent;
 			_feedbackDialogFactory = feedbackDialogFactory;
 			_chorusSystem = chorusSystem;
-			_sparkleApplicationUpdater = sparkleApplicationUpdater;
 			_localizationManager = localizationManager;
 			_model.UpdateDisplay += new System.EventHandler(OnUpdateDisplay);
 			InitializeComponent();
-
-		   _sparkleApplicationUpdater.CheckOnFirstApplicationIdle();
 
 			_toolStrip.Renderer = new NoBorderToolStripRenderer();
 
@@ -317,11 +313,7 @@ namespace Bloom.Workspace
 
 		private void _releaseNotesMenuItem_Click(object sender, EventArgs e)
 		{
-			var path = FileLocator.GetFileDistributedWithApplication("ReleaseNotes.md");
-			using(var dlg = new ShowReleaseNotesDialog(this.FindForm().Icon,path))
-			{
-				dlg.ShowDialog();
-			}
+			Process.Start(FileLocator.GetFileDistributedWithApplication("infoPages","0 Release Notes.htm"));
 		}
 
 		private void _makeASuggestionMenuItem_Click(object sender, EventArgs e)
@@ -385,7 +377,7 @@ namespace Bloom.Workspace
 
 		private void _checkForNewVersionMenuItem_Click(object sender, EventArgs e)
 		{
-			_sparkleApplicationUpdater.CheckForUpdatesAtUserRequest();
+			//_sparkleApplicationUpdater.CheckForUpdatesAtUserRequest();
 		}
 	}
 

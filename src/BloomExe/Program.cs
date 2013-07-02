@@ -13,6 +13,7 @@ using Chorus;
 using L10NSharp;
 using Palaso.IO;
 using Palaso.Reporting;
+using Skybound.Gecko;
 using System.Linq;
 
 namespace Bloom
@@ -48,8 +49,8 @@ namespace Bloom
 				if (!GrabMutexForBloom())
 					return;
 
-				OldVersionCheck();
-
+				if (Platform.Utilities.Platform.IsWindows)
+					OldVersionCheck();
 				//bring in settings from any previous version
 				if (Settings.Default.NeedUpgrade)
 				{
@@ -81,26 +82,32 @@ namespace Bloom
 					Settings.Default.MruProjects.AddNewPath(args[0]);
 				}
 				_earliestWeShouldCloseTheSplashScreen = DateTime.Now.AddSeconds(7);
-				Splasher.Show();
 
-				SetUpReporting();
-				Settings.Default.Save();
+				EventHandler startAppOnIdle = (sender, e) =>
+				{
+					Application.Idle -= startAppOnIdle;
 
-				Browser.SetUpXulRunner();
+					SetUpReporting();
+					Settings.Default.Save();
 
-				StartUpShellBasedOnMostRecentUsedIfPossible();
-				Application.Idle += new EventHandler(Application_Idle);
+					Browser.SetUpXulRunner();
+
+					StartUpShellBasedOnMostRecentUsedIfPossible();
+					Application.Idle += new EventHandler(Application_Idle);
 
 				L10NSharp.LocalizationManager.SetUILanguage(Settings.Default.UserInterfaceLanguage,false);
-				try
-				{
-					Application.Run();
-				}
-				catch (System.AccessViolationException nasty)
-				{
-					Logger.ShowUserATextFileRelatedToCatastrophicError(nasty);
-					System.Environment.FailFast("AccessViolationException");
-				}
+					EventHandler hideSplash = (sender2, e2) =>
+					{
+						Splasher.Hide();
+						Application.Idle -= hideSplash;
+					};
+
+					Application.Idle += hideSplash;
+				};
+
+				Application.Idle += startAppOnIdle;
+
+				Splasher.Show();
 
 				Settings.Default.Save();
 
@@ -407,16 +414,11 @@ namespace Bloom
 			{
 				Application.Idle +=new EventHandler(ReopenProject);
 			}
-			else if (((Shell)sender).QuitForVersionUpdate)
-			{
-				Application.Exit();
-			}
 			else
 			{
 				Application.Exit();
 			}
 		}
-
 
 		private static void ReopenProject(object sender, EventArgs e)
 		{
