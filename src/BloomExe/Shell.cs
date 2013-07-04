@@ -1,16 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Windows.Forms;
-using Microsoft.Win32;
-using NetSparkle;
 using Bloom.Collection;
 using Bloom.Properties;
 using Bloom.Workspace;
-
+using Palaso.Reporting;
 
 namespace Bloom
 {
@@ -20,8 +22,7 @@ namespace Bloom
 		private readonly LibraryClosing _libraryClosingEvent;
 		private readonly WorkspaceView _workspaceView;
 
-
-		public Shell(Func<WorkspaceView> projectViewFactory, CollectionSettings collectionSettings, LibraryClosing libraryClosingEvent, QueueRenameOfCollection queueRenameOfCollection, Sparkle _sparkle)
+		public Shell(Func<WorkspaceView> projectViewFactory, CollectionSettings collectionSettings, LibraryClosing libraryClosingEvent, QueueRenameOfCollection queueRenameOfCollection)
 		{
 			queueRenameOfCollection.Subscribe(newName => _nameToChangeCollectionUponClosing = newName);
 			_collectionSettings = collectionSettings;
@@ -42,23 +43,9 @@ namespace Bloom
 														UserWantsToOpenADifferentProject = true;
 														Close();
 													});
-
-			_sparkle.AboutToExitForInstallerRun += ((x, cancellable) =>
-			{
-				cancellable.Cancel = false;
-				QuitForVersionUpdate = true;
-				Close();
-			});
-
 			_workspaceView.ReopenCurrentProject += ((x, y) =>
 			{
 				UserWantsToOpeReopenProject = true;
-				Close();
-			});
-
-			SystemEvents.SessionEnding += ((x,y)=>
-			{
-				QuitForSystemShutdown=true;
 				Close();
 			});
 
@@ -117,14 +104,6 @@ namespace Bloom
 		public bool UserWantsToOpenADifferentProject { get; set; }
 
 		public bool UserWantsToOpeReopenProject;
-
-		/// <summary>
-		/// used when the user does an in-app installer download; after we close down, Program will read this and return control to Sparkle
-		/// </summary>
-		public bool QuitForVersionUpdate;
-
-		public bool QuitForSystemShutdown;
-
 		private string _nameToChangeCollectionUponClosing;
 
 
