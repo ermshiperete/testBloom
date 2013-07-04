@@ -4,7 +4,6 @@ using System.Linq;
 using System.Windows.Forms;
 using Bloom.Book;
 using Bloom.Properties;
-using DesktopAnalytics;
 using L10NSharp;
 using Palaso.Reporting;
 using Palaso.UI.WindowsForms.WritingSystems;
@@ -224,6 +223,7 @@ namespace Bloom.Collection
 			LoadFontCombo();
 
 			Logger.WriteEvent("Entered Settings Dialog");
+			UsageReporter.SendNavigationNotice("Entered Settings Dialog");
 		}
 
 		private void LoadFontCombo()
