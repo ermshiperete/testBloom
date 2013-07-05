@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using Bloom.Book;
 using Bloom.Collection;
 using Bloom.Properties;
-using DesktopAnalytics;
 using Palaso.Reporting;
 
 namespace Bloom.CollectionTab
@@ -91,7 +90,6 @@ namespace Bloom.CollectionTab
 					{
 						_model.ExportXHtml(dlg.FileName);
 						Process.Start("explorer.exe", "/select, \"" + dlg.FileName + "\"");
-						Analytics.Track("Exported XHtml");
 					}
 					catch (Exception error)
 					{

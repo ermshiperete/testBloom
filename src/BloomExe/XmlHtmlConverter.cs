@@ -22,7 +22,7 @@ namespace Bloom
 		/// <param name="content"></param>
 		/// <exception cref="">Throws if there are parsing errors</exception>
 		/// <returns></returns>
-		public static XmlDocument GetXmlDomFromHtmlFile(string path, bool includeXmlDeclaration)
+		public static XmlDocument GetXmlDomFromHtmlFile(string path, bool includeXmlDeclaration = false)
 		{
 			return GetXmlDomFromHtml(File.ReadAllText(path), includeXmlDeclaration);
 		}
@@ -34,7 +34,7 @@ namespace Bloom
 		/// <param name="includeXmlDeclaration"></param>
 		/// <exception cref="">Throws if there are parsing errors</exception>
 		/// <returns></returns>
-		public static XmlDocument GetXmlDomFromHtml(string content, bool includeXmlDeclaration)
+		public static XmlDocument GetXmlDomFromHtml(string content, bool includeXmlDeclaration = false)
 		{
 			var dom = new XmlDocument();
 			//hack. tidy deletes <span data-libray='somethingImportant'></span>
@@ -198,6 +198,7 @@ namespace Bloom
 			}
 			//now insert the non-xml-ish <!doctype html>
 			File.WriteAllText(tempPath, "<!DOCTYPE html>\r\n" + File.ReadAllText(initialOutputPath));
+#if DEBUG   //TODO when we trust this, give it to everybody
 
 			//now re-write, indented nicely
 			using (var tidy = TidyManaged.Document.FromFile(initialOutputPath))
@@ -222,7 +223,7 @@ namespace Bloom
 			File.Delete(initialOutputPath);
 
 			File.WriteAllText(tempPath, "<!DOCTYPE html>\r\n" + File.ReadAllText(tempPath));
-
+#endif
 			return tempPath;
 		}
 	}
