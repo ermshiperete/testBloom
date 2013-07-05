@@ -15,6 +15,7 @@ using Palaso.Extensions;
 using Palaso.IO;
 using Palaso.Progress;
 using Palaso.Reporting;
+using Palaso.UI.WindowsForms.FileSystem;
 using Palaso.Xml;
 
 namespace Bloom.Book

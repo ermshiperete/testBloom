@@ -164,6 +164,9 @@ namespace Bloom
 						}
 
 						Guard.AgainstNull(browser.Document.ActiveElement, "browser.Document.ActiveElement");
+#if __MonoCS__
+						Application.RaiseIdle(null);
+#endif
 
 						/* saw crash here, shortly after startup:
 						 * 1) opened an existing book
@@ -310,8 +313,12 @@ namespace Bloom
 		private GeckoWebBrowser MakeNewBrowser()
 		{
 			Debug.WriteLine("making browser");
+#if !__MonoCS__
 
 			var browser = new GeckoWebBrowser();
+#else
+			var browser = new OffScreenGeckoWebBrowser();
+#endif
 			browser.HandleCreated += new EventHandler(OnBrowser_HandleCreated);
 			browser.CreateControl();
 			var giveUpTime = DateTime.Now.AddSeconds(2);
@@ -337,6 +344,7 @@ namespace Bloom
 
 
 
+
 		private Image MakeThumbNail(Image bmp, int destinationWidth, int destinationHeight, Color borderColor, bool drawBorderDashed)
 		{
 			if (bmp == null)
@@ -356,36 +364,16 @@ namespace Bloom
 			int horizontalOffset = (destinationWidth / 2) - (actualWidth / 2);
 			int verticalOffset = (destinationHeight / 2) - (actualHeight / 2);
 
-#if MONO
-//    this worked but didn't incorporate the offsets, so when it went back to the caller, it got displayed
-//            out of proportion.
-//            Image x = bmp.GetThumbnailImage(destinationWidth, destinationHeight, callbackOnAbort, System.IntPtr.Zero);
-//            return x;
+			var destRect = new Rectangle(horizontalOffset, verticalOffset, actualWidth, actualHeight);
+			int skipMarginH = 30;
+			int skipMarginV = 30;
 
-
-			Bitmap retBmp = new Bitmap(destinationWidth, destinationHeight);//, System.Drawing.Imaging.PixelFormat.Format64bppPArgb);
-			Graphics grp = Graphics.FromImage(retBmp);
-			//grp.PixelOffsetMode = PixelOffsetMode.None;
-		 //guessing that this is the problem?   grp.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
-			grp.DrawImage(bmp, horizontalOffset, verticalOffset, actualWidth, actualHeight);
-
-//            Pen pn = new Pen(borderColor, 1); //Color.Wheat
-//
-//
-//            grp.DrawRectangle(pn, 0, 0, retBmp.Width - 1, retBmp.Height - 1);
-
-			return retBmp;
-#else
-
+#if !__MonoCS__
 			Bitmap thumbnail = new Bitmap(destinationWidth, destinationHeight, System.Drawing.Imaging.PixelFormat.Format64bppPArgb);
 			using (Graphics graphics = Graphics.FromImage(thumbnail))
 			{
 				graphics.PixelOffsetMode = PixelOffsetMode.None;
 				graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
-				var destRect = new Rectangle(horizontalOffset, verticalOffset, actualWidth,actualHeight);
-
 
 				//leave out the grey boarder which is in the browser, and zoom in some
 				int skipMarginH = 0;// 30; //
@@ -410,6 +398,9 @@ namespace Bloom
 //                }
 			}
 			return thumbnail;
+#else
+			Bitmap croppedImage = (bmp as Bitmap).Clone(new Rectangle(new Point(skipMarginH, skipMarginV), new Size(bmp.Width - 2 * skipMarginH, bmp.Height - 2 * skipMarginV)), bmp.PixelFormat);
+			return croppedImage.GetThumbnailImage(destinationWidth, destinationHeight, null, System.IntPtr.Zero);
 #endif
 		}
 
