@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
 using System.Net;
-using System.Net.Mime;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
 using System.Threading;
@@ -12,10 +11,10 @@ using Bloom.Collection.BloomPack;
 using Bloom.CollectionCreating;
 using Bloom.Properties;
 using Chorus;
-using DesktopAnalytics;
 using L10NSharp;
 using Palaso.IO;
 using Palaso.Reporting;
+using Skybound.Gecko;
 using System.Linq;
 
 namespace Bloom
@@ -48,6 +47,13 @@ namespace Bloom
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(false);
 
+#if !DEBUG //the exception you get when there is no other BLOOM is pain when running debugger with break-on-exceptions
+				if (!GrabMutexForBloom())
+					return;
+#endif
+
+				if (Platform.Utilities.Platform.IsWindows)
+					OldVersionCheck();
 				//bring in settings from any previous version
 				if (Settings.Default.NeedUpgrade)
 				{
@@ -58,30 +64,6 @@ namespace Bloom
 					StartUpWithFirstOrNewVersionBehavior = true;
 				}
 
-				if (args.Length == 1 && args[0].ToLower().EndsWith(".bloompack"))
-				{
-#if DEBUG
-					using (new Analytics("sje2fq26wnnk8c2kzflf"))
-#else
-					using (new Analytics("c8ndqrrl7f0twbf2s6cv"))
-#endif
-					using (var dlg = new BloomPackInstallDialog(args[0]))
-					{
-						dlg.ShowDialog();
-					}
-					return;
-				}
-
-
-#if !DEBUG //the exception you get when there is no other BLOOM is pain when running debugger with break-on-exceptions
-				if (!GrabMutexForBloom())
-					return;
-#endif
-
-				OldVersionCheck();
-
-
-
 				SetUpErrorHandling();
 
 				_applicationContainer = new ApplicationContainer();
@@ -90,42 +72,49 @@ namespace Bloom
 				Logger.Init();
 
 
-
+				if (args.Length == 1 && args[0].ToLower().EndsWith(".bloompack"))
+				{
+					using (var dlg = new BloomPackInstallDialog(args[0]))
+					{
+						dlg.ShowDialog();
+					}
+					return;
+				}
 				if (args.Length == 1 && args[0].ToLower().EndsWith(".bloomcollection"))
 				{
 					Settings.Default.MruProjects.AddNewPath(args[0]);
 				}
 				_earliestWeShouldCloseTheSplashScreen = DateTime.Now.AddSeconds(7);
+
+				EventHandler startAppOnIdle = (sender, e) =>
+				{
+					Application.Idle -= startAppOnIdle;
+
+					SetUpReporting();
+					Settings.Default.Save();
+
+					Browser.SetUpXulRunner();
+
+					StartUpShellBasedOnMostRecentUsedIfPossible();
+					Application.Idle += new EventHandler(Application_Idle);
+
+				L10NSharp.LocalizationManager.SetUILanguage(Settings.Default.UserInterfaceLanguage,false);
+					EventHandler hideSplash = (sender2, e2) =>
+					{
+						Splasher.Hide();
+						Application.Idle -= hideSplash;
+					};
+
+					Application.Idle += hideSplash;
+				};
+
+				Application.Idle += startAppOnIdle;
+
 				Splasher.Show();
 
 				Settings.Default.Save();
 
-				Browser.SetUpXulRunner();
-
-				StartUpShellBasedOnMostRecentUsedIfPossible();
-				Application.Idle += new EventHandler(Application_Idle);
-
-				L10NSharp.LocalizationManager.SetUILanguage(Settings.Default.UserInterfaceLanguage,false);
-#if DEBUG
-				using (new Analytics( "sje2fq26wnnk8c2kzflf"))
-#else
-				using (new Analytics("c8ndqrrl7f0twbf2s6cv"))
-#endif
-				{
-					try
-					{
-						Application.Run();
-					}
-					catch (System.AccessViolationException nasty)
-					{
-						Logger.ShowUserATextFileRelatedToCatastrophicError(nasty);
-						System.Environment.FailFast("AccessViolationException");
-					}
-
-					Settings.Default.Save();
-
-					Logger.ShutDown();
-				}
+				Logger.ShutDown();
 
 				if (_projectContext != null)
 					_projectContext.Dispose();
@@ -428,16 +417,11 @@ namespace Bloom
 			{
 				Application.Idle +=new EventHandler(ReopenProject);
 			}
-			else if (((Shell)sender).QuitForVersionUpdate)
-			{
-				Application.Exit();
-			}
 			else
 			{
 				Application.Exit();
 			}
 		}
-
 
 		private static void ReopenProject(object sender, EventArgs e)
 		{
@@ -502,18 +486,27 @@ namespace Bloom
 			Palaso.Reporting.ErrorReport.EmailAddress = "issues@bloom.palaso.org";
 			Palaso.Reporting.ErrorReport.AddStandardProperties();
 			Palaso.Reporting.ExceptionHandler.Init();
-
-			ExceptionHandler.AddDelegate((w,e) => DesktopAnalytics.Analytics.ReportException(e.Exception));
 		}
 
 
+		private static void SetUpReporting()
+		{
+			if (Settings.Default.Reporting == null)
+			{
+				Settings.Default.Reporting = new ReportingSettings();
+				Settings.Default.Save();
+			}
+			UsageReporter.Init(Settings.Default.Reporting, "bloom.palaso.org", "UA-22170471-2",
+#if DEBUG
+				true
+#else
+				false
+#endif
+				);
+		}
+
 		public static void OldVersionCheck()
 		{
-			return;
-
-
-
-
 			var asm = Assembly.GetExecutingAssembly();
 			var file = asm.CodeBase.Replace("file:", string.Empty);
 			file = file.TrimStart('/');
@@ -522,7 +515,7 @@ namespace Bloom
 				{
 					try
 					{
-						if (Dns.GetHostAddresses("ftp.sil.org.pg").Length > 0)
+						if (Dns.GetHostAddresses("ftpx.sil.org.pg").Length > 0)
 						{
 							if(DialogResult.Yes == MessageBox.Show("This beta version of Bloom is now over 90 days old. Click 'Yes' to have Bloom open the folder on the Ukarumpa FTP site where you can get a new one.","OLD BETA",MessageBoxButtons.YesNo))
 							{
