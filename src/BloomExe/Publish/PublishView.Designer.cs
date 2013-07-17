@@ -47,9 +47,10 @@
 			this._bodyRadio = new System.Windows.Forms.RadioButton();
 			this._coverRadio = new System.Windows.Forms.RadioButton();
 			this._noBookletRadio = new System.Windows.Forms.RadioButton();
+			this._showCropMarks = new System.Windows.Forms.CheckBox();
 			this._L10NSharpExtender = new L10NSharp.UI.L10NSharpExtender(this.components);
-			this._adobeReaderControl = new Bloom.Publish.AdobeReaderControl();
 			this.superToolTip1 = new Palaso.UI.WindowsForms.SuperToolTip.SuperToolTip(this.components);
+			this._adobeReaderControl = new Bloom.Publish.AdobeReaderControl();
 			this._workingIndicator.SuspendLayout();
 			this._topBarPanel.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
@@ -136,11 +137,13 @@
 			this.tableLayoutPanel1.Controls.Add(this._bodyRadio, 0, 1);
 			this.tableLayoutPanel1.Controls.Add(this._coverRadio, 0, 2);
 			this.tableLayoutPanel1.Controls.Add(this._noBookletRadio, 0, 3);
+			this.tableLayoutPanel1.Controls.Add(this._showCropMarks, 0, 4);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left;
 			this.tableLayoutPanel1.ForeColor = System.Drawing.Color.White;
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 4;
+			this.tableLayoutPanel1.RowCount = 5;
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -216,9 +219,9 @@
 			superToolTipInfo1.BackgroundGradientBegin = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
 			superToolTipInfo1.BackgroundGradientEnd = System.Drawing.Color.FromArgb(((int)(((byte)(202)))), ((int)(((byte)(218)))), ((int)(((byte)(239)))));
 			superToolTipInfo1.BackgroundGradientMiddle = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(246)))), ((int)(((byte)(251)))));
-			superToolTipInfo1.BodyText = "Use this for making a booklet.\r\nThe pages will be laid out and reordered so that" +
-	" when you fold it, you\'ll have a booklet.\r\nThe cover page won\'t be included; use" +
-	" the \"Cover Page\" option for that.";
+			superToolTipInfo1.BodyText = "Use this for making a booklet.\r\nThe pages will be laid out and reordered so that " +
+	"when you fold it, you\'ll have a booklet.\r\nThe cover page won\'t be included; use " +
+	"the \"Cover Page\" option for that.";
 			superToolTipInfo1.HeaderText = "Booklet Inside Pages";
 			superToolTipInfo1.OffsetForWhereToDisplay = new System.Drawing.Point(0, 0);
 			superToolTipInfoWrapper1.SuperToolTipInfo = superToolTipInfo1;
@@ -262,7 +265,7 @@
 			this._noBookletRadio.Image = global::Bloom.Properties.Resources.simplePages;
 			this._L10NSharpExtender.SetLocalizableToolTip(this._noBookletRadio, null);
 			this._L10NSharpExtender.SetLocalizationComment(this._noBookletRadio, "Instead of making a booklet, just make normal pages");
-			this._L10NSharpExtender.SetLocalizingId(this._noBookletRadio, "PublishTab.OnPagePerPaperRadio");
+			this._L10NSharpExtender.SetLocalizingId(this._noBookletRadio, "PublishTab.OnePagePerPaperRadio");
 			this._noBookletRadio.Location = new System.Drawing.Point(3, 259);
 			this._noBookletRadio.Name = "_noBookletRadio";
 			this._noBookletRadio.Size = new System.Drawing.Size(94, 108);
@@ -273,9 +276,31 @@
 			this._noBookletRadio.UseVisualStyleBackColor = true;
 			this._noBookletRadio.CheckedChanged += new System.EventHandler(this.OnBookletRadioChanged);
 			//
+			// _showCropMarks
+			//
+			this._showCropMarks.AutoSize = true;
+			this._showCropMarks.Image = global::Bloom.Properties.Resources.cropMarks;
+			this._L10NSharpExtender.SetLocalizableToolTip(this._showCropMarks, null);
+			this._L10NSharpExtender.SetLocalizationComment(this._showCropMarks, null);
+			this._L10NSharpExtender.SetLocalizingId(this._showCropMarks, "PublishTab.ShowCropMarks");
+			this._showCropMarks.Location = new System.Drawing.Point(3, 400);
+			this._showCropMarks.Margin = new System.Windows.Forms.Padding(3, 30, 3, 3);
+			this._showCropMarks.Name = "_showCropMarks";
+			this._showCropMarks.Size = new System.Drawing.Size(80, 62);
+			this._showCropMarks.TabIndex = 15;
+			this._showCropMarks.Text = "Crop Marks";
+			this._showCropMarks.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this._showCropMarks.UseVisualStyleBackColor = true;
+			this._showCropMarks.CheckedChanged += new System.EventHandler(this.OnShowCropMarks_CheckedChanged);
+			//
 			// _L10NSharpExtender
 			//
 			this._L10NSharpExtender.LocalizationManagerId = "Bloom";
+			this._L10NSharpExtender.PrefixForNewItems = null;
+			//
+			// superToolTip1
+			//
+			this.superToolTip1.FadingInterval = 10;
 			//
 			// _adobeReaderControl
 			//
@@ -290,10 +315,6 @@
 			this._adobeReaderControl.Name = "_adobeReaderControl";
 			this._adobeReaderControl.Size = new System.Drawing.Size(727, 537);
 			this._adobeReaderControl.TabIndex = 16;
-			//
-			// superToolTip1
-			//
-			this.superToolTip1.FadingInterval = 10;
 			//
 			// PublishView
 			//
@@ -312,6 +333,7 @@
 			this._topBarPanel.ResumeLayout(false);
 			this._topBarPanel.PerformLayout();
 			this.tableLayoutPanel1.ResumeLayout(false);
+			this.tableLayoutPanel1.PerformLayout();
 			this.contextMenuStrip1.ResumeLayout(false);
 			this._menusToolStrip.ResumeLayout(false);
 			this._menusToolStrip.PerformLayout();
@@ -340,5 +362,6 @@
 		private System.Windows.Forms.ToolStrip _menusToolStrip;
 		private System.Windows.Forms.ToolStripDropDownButton _layoutChoices;
 		private Palaso.UI.WindowsForms.SuperToolTip.SuperToolTip superToolTip1;
+		private System.Windows.Forms.CheckBox _showCropMarks;
 	}
 }
