@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using System.Linq;
-using DesktopAnalytics;
 using Ionic.Zip;
 using Palaso.Reporting;
 
@@ -93,7 +92,8 @@ namespace Bloom.Collection.BloomPack
 							+ L10NSharp.LocalizationManager.GetString("BloomPackInstallDialog.MustRestartToSee",
 																				 "Bloom is already running, but the contents will not show up until the next time you run Bloom");
 					}
-					Analytics.Track("Install BloomPack");
+					UsageReporter.SendNavigationNotice("Installed BloomPack");
+					UsageReporter.SendEvent("BloomPack", "BloomPack", "Install", folderName,0);
 				}
 			}
 			catch (Exception error)
