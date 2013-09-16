@@ -9,7 +9,6 @@ using System.Xml;
 using Bloom.Book;
 using Bloom.CollectionTab;
 using Bloom.Edit;
-using DesktopAnalytics;
 using Palaso.Reporting;
 
 
@@ -51,7 +50,7 @@ namespace Bloom.Publish
 
 			//TODO: find a way to call this just once, at the right time:
 
-			//			DeskAnalytics.Track("Publish");
+			//			UsageReporter.SendNavigationNotice("Publish");
 
 //#if DEBUG
 //        	var linkLabel = new LinkLabel() {Text = "DEBUG"};
@@ -245,8 +244,8 @@ namespace Bloom.Publish
 		{
 
 			_adobeReaderControl.Print();
+			UsageReporter.SendNavigationNotice("Print");
 			Logger.WriteEvent("Calling Print on Adobe Reader");
-			Analytics.Track("Print PDF");
 		}
 
 		private void _makePdfBackgroundWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)

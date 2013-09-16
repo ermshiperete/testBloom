@@ -9,10 +9,10 @@ using System.Windows.Forms;
 using Bloom.Collection.BloomPack;
 using Bloom.CollectionCreating;
 using Bloom.Properties;
-using DesktopAnalytics;
 using L10NSharp;
 using Palaso.IO;
 using Palaso.Reporting;
+using Skybound.Gecko;
 using System.Linq;
 
 namespace Bloom
@@ -47,6 +47,15 @@ namespace Bloom
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(false);
 
+#if !DEBUG //the exception you get when there is no other BLOOM is pain when running debugger with break-on-exceptions
+				if (!GrabMutexForBloom())
+					return;
+#endif
+
+				if (Platform.Utilities.Platform.IsWindows)
+				{
+					OldVersionCheck();
+				}
 				//bring in settings from any previous version
 				if (Settings.Default.NeedUpgrade)
 				{
@@ -57,62 +66,35 @@ namespace Bloom
 					StartUpWithFirstOrNewVersionBehavior = true;
 				}
 
-#if xDEBUG
-				using (new Analytics("sje2fq26wnnk8c2kzflf",true))
+				SetUpErrorHandling();
 
-#else
-				string feedbackSetting = System.Environment.GetEnvironmentVariable("FEEDBACK");
+				_applicationContainer = new ApplicationContainer();
 
-				//default is to allow tracking
-				var allowTracking = string.IsNullOrEmpty(feedbackSetting) || feedbackSetting.ToLower() == "yes" || feedbackSetting.ToLower() == "true";
+				SetUpLocalization();
+				Logger.Init();
 
-				using (new Analytics("c8ndqrrl7f0twbf2s6cv", allowTracking))
 
-#endif
-				 {
-					if (args.Length == 1 && args[0].ToLower().EndsWith(".bloompack"))
+				if (args.Length == 1 && args[0].ToLower().EndsWith(".bloompack"))
+				{
+					using (var dlg = new BloomPackInstallDialog(args[0]))
 					{
-						using (var dlg = new BloomPackInstallDialog(args[0]))
-						{
-							dlg.ShowDialog();
-						}
-						return;
+						dlg.ShowDialog();
 					}
-
-
-#if !DEBUG //the exception you get when there is no other BLOOM is a pain when running debugger with break-on-exceptions
-				if (!GrabMutexForBloom())
 					return;
-#endif
+				}
+				if (args.Length == 1 && args[0].ToLower().EndsWith(".bloomcollection"))
+				{
+					Settings.Default.MruProjects.AddNewPath(args[0]);
+				}
+				_earliestWeShouldCloseTheSplashScreen = DateTime.Now.AddSeconds(3);
 
-					OldVersionCheck();
+				Settings.Default.Save();
 
+				Browser.SetUpXulRunner();
 
+				Application.Idle +=Startup;
 
-					SetUpErrorHandling();
-
-					_applicationContainer = new ApplicationContainer();
-
-					SetUpLocalization();
-					Logger.Init();
-
-
-
-					if (args.Length == 1 && args[0].ToLower().EndsWith(".bloomcollection"))
-					{
-						Settings.Default.MruProjects.AddNewPath(args[0]);
-					}
-					_earliestWeShouldCloseTheSplashScreen = DateTime.Now.AddSeconds(3);
-
-					Settings.Default.Save();
-
-					Browser.SetUpXulRunner();
-
-					Application.Idle += Startup;
-
-
-
-					L10NSharp.LocalizationManager.SetUILanguage(Settings.Default.UserInterfaceLanguage, false);
+				L10NSharp.LocalizationManager.SetUILanguage(Settings.Default.UserInterfaceLanguage,false);
 
 					try
 					{
@@ -131,7 +113,7 @@ namespace Bloom
 
 					if (_projectContext != null)
 						_projectContext.Dispose();
-				}
+
 			}
 			finally
 			{
@@ -342,8 +324,6 @@ namespace Bloom
 		{
 			Debug.Assert(_projectContext == null);
 
-			CheckAndWarnAboutVirtualStore();
-
 			try
 			{
 				//NB: initially, you could have multiple blooms, if they were different projects.
@@ -372,35 +352,6 @@ namespace Bloom
 			}
 
 			return false;
-		}
-
-		//The windows "VirtualStore" is teh source of some really hard to figure out behavior:
-		//The symptom is, getting different results in the installed version, *unless you change the name of the Bloom folder in Program Files*.
-		//Then look at C:\Users\User\AppData\Local\VirtualStore\Program Files (x86)\Bloom and you'll find some old files.
-		private static void CheckAndWarnAboutVirtualStore()
-		{
-			var programFilesName = Path.GetFileName(System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFiles));
-			var virtualStore = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData),
-								 "VirtualStore");
-			var ourVirtualStore = Path.Combine(virtualStore, programFilesName);
-			ourVirtualStore = Path.Combine(ourVirtualStore, "Bloom");
-
-			if (Directory.Exists(ourVirtualStore))
-			{
-#if DEBUG
-				Debug.Fail("You have a shadow copy of some Bloom files at " + ourVirtualStore + " that has crept in via running the installed version. Find what caused it and stamp it out!");
-#endif
-				try
-				{
-					Directory.Delete(ourVirtualStore, true);
-				}
-				catch (Exception error)
-				{
-					ErrorReport.NotifyUserOfProblem("Bloom could not remove the Virtual Store shadow of Bloom at " + ourVirtualStore +
-													". This can cause some stylesheets to fall out of date.");
-					Analytics.ReportException(error);
-				}
-			}
 		}
 
 		private static void HandleProjectWindowActivated(object sender, EventArgs e)
@@ -501,16 +452,11 @@ namespace Bloom
 			{
 				Application.Idle +=new EventHandler(ReopenProject);
 			}
-			else if (((Shell)sender).QuitForVersionUpdate)
-			{
-				Application.Exit();
-			}
 			else
 			{
 				Application.Exit();
 			}
 		}
-
 
 		private static void ReopenProject(object sender, EventArgs e)
 		{
@@ -575,18 +521,27 @@ namespace Bloom
 			Palaso.Reporting.ErrorReport.EmailAddress = "issues@bloom.palaso.org";
 			Palaso.Reporting.ErrorReport.AddStandardProperties();
 			Palaso.Reporting.ExceptionHandler.Init();
-
-			ExceptionHandler.AddDelegate((w,e) => DesktopAnalytics.Analytics.ReportException(e.Exception));
 		}
 
 
+		private static void SetUpReporting()
+		{
+			if (Settings.Default.Reporting == null)
+			{
+				Settings.Default.Reporting = new ReportingSettings();
+				Settings.Default.Save();
+			}
+			UsageReporter.Init(Settings.Default.Reporting, "bloom.palaso.org", "UA-22170471-2",
+#if DEBUG
+				true
+#else
+				false
+#endif
+				);
+		}
+
 		public static void OldVersionCheck()
 		{
-			return;
-
-
-
-
 			var asm = Assembly.GetExecutingAssembly();
 			var file = asm.CodeBase.Replace("file:", string.Empty);
 			file = file.TrimStart('/');
@@ -595,7 +550,7 @@ namespace Bloom
 				{
 					try
 					{
-						if (Dns.GetHostAddresses("ftp.sil.org.pg").Length > 0)
+						if (Dns.GetHostAddresses("ftpx.sil.org.pg").Length > 0)
 						{
 							if(DialogResult.Yes == MessageBox.Show("This beta version of Bloom is now over 90 days old. Click 'Yes' to have Bloom open the folder on the Ukarumpa FTP site where you can get a new one.","OLD BETA",MessageBoxButtons.YesNo))
 							{
