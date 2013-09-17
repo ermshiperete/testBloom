@@ -3,7 +3,6 @@ using System.Windows.Forms;
 using Bloom.Properties;
 using Bloom.SendReceive;
 using Bloom.Workspace;
-using DesktopAnalytics;
 using L10NSharp;
 using Palaso.Reporting;
 
@@ -47,6 +46,7 @@ namespace Bloom.CollectionTab
 													if (c.To == this)
 													{
 														Logger.WriteEvent("Entered Collections Tab");
+														UsageReporter.SendNavigationNotice("Entered Collections Tab");
 													}
 												});
 		}

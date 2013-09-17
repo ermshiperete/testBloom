@@ -11,7 +11,6 @@ using Bloom.Book;
 using Bloom.Collection;
 using Bloom.MiscUI;
 using Bloom.Properties;
-using DesktopAnalytics;
 using Palaso.Reporting;
 
 namespace Bloom.CollectionTab
@@ -102,12 +101,10 @@ namespace Bloom.CollectionTab
 #if !MONO
 						Process.Start("explorer.exe", "/select, \"" + dlg.FileName + "\"");
 #endif
-						Analytics.Track("Exported XML For InDesign");
 					}
 					catch (Exception error)
 					{
 						Palaso.Reporting.ErrorReport.NotifyUserOfProblem(error, "Could not export the book to XML");
-						Analytics.ReportException(error);
 					}
 				}
 			}
