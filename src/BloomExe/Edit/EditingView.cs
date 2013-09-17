@@ -8,7 +8,6 @@ using System.Windows.Forms;
 using Bloom.Book;
 using Bloom.CollectionTab;
 using Bloom.Properties;
-using DesktopAnalytics;
 using L10NSharp;
 using Palaso.Extensions;
 using Palaso.Progress;
@@ -278,6 +277,7 @@ namespace Bloom.Edit
 				Application.Idle += new EventHandler(VisibleNowAddSlowContents);
 				Cursor = Cursors.WaitCursor;
 				Logger.WriteEvent("Entered Edit Tab");
+				UsageReporter.SendNavigationNotice("Entered Edit Tab");
 			}
 			else
 			{
