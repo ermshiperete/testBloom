@@ -49,6 +49,7 @@
 			this._showLogMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this._divider4 = new System.Windows.Forms.ToolStripSeparator();
 			this._checkForNewVersionMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this._registrationMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this._aboutBloomMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this._uiLanguageMenu = new System.Windows.Forms.ToolStripDropDownButton();
 			this._L10NSharpExtender = new L10NSharp.UI.L10NSharpExtender(this.components);
@@ -109,7 +110,7 @@
 			this._toolStrip.Location = new System.Drawing.Point(0, 0);
 			this._toolStrip.Name = "_toolStrip";
 			this._toolStrip.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this._toolStrip.Size = new System.Drawing.Size(272, 65);
+			this._toolStrip.Size = new System.Drawing.Size(272, 46);
 			this._toolStrip.TabIndex = 28;
 			this._toolStrip.Text = "_toolStrip";
 			//
@@ -159,6 +160,7 @@
 			this._showLogMenuItem,
 			this._divider4,
 			this._checkForNewVersionMenuItem,
+			this._registrationMenuItem,
 			this._aboutBloomMenuItem});
 			this._helpMenu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
 			this._helpMenu.Image = global::Bloom.Properties.Resources.help24x24;
@@ -178,7 +180,6 @@
 			this._documentationMenuItem.Image = global::Bloom.Properties.Resources.help24x24;
 			this._L10NSharpExtender.SetLocalizableToolTip(this._documentationMenuItem, null);
 			this._L10NSharpExtender.SetLocalizationComment(this._documentationMenuItem, null);
-			this._L10NSharpExtender.SetLocalizationPriority(this._documentationMenuItem, L10NSharp.LocalizationPriority.Medium);
 			this._L10NSharpExtender.SetLocalizingId(this._documentationMenuItem, "HelpMenu.documentationMenuItem");
 			this._documentationMenuItem.Name = "_documentationMenuItem";
 			this._documentationMenuItem.Size = new System.Drawing.Size(196, 22);
@@ -194,7 +195,6 @@
 			//
 			this._L10NSharpExtender.SetLocalizableToolTip(this._releaseNotesMenuItem, null);
 			this._L10NSharpExtender.SetLocalizationComment(this._releaseNotesMenuItem, null);
-			this._L10NSharpExtender.SetLocalizationPriority(this._releaseNotesMenuItem, L10NSharp.LocalizationPriority.Medium);
 			this._L10NSharpExtender.SetLocalizingId(this._releaseNotesMenuItem, "HelpMenu.releaseNotesMenuItem");
 			this._releaseNotesMenuItem.Name = "_releaseNotesMenuItem";
 			this._releaseNotesMenuItem.Size = new System.Drawing.Size(196, 22);
@@ -223,7 +223,6 @@
 			this._makeASuggestionMenuItem.Image = global::Bloom.Properties.Resources.uservoice16x161;
 			this._L10NSharpExtender.SetLocalizableToolTip(this._makeASuggestionMenuItem, null);
 			this._L10NSharpExtender.SetLocalizationComment(this._makeASuggestionMenuItem, null);
-			this._L10NSharpExtender.SetLocalizationPriority(this._makeASuggestionMenuItem, L10NSharp.LocalizationPriority.Medium);
 			this._L10NSharpExtender.SetLocalizingId(this._makeASuggestionMenuItem, "HelpMenu._makeASuggestionMenuItem");
 			this._makeASuggestionMenuItem.Name = "_makeASuggestionMenuItem";
 			this._makeASuggestionMenuItem.Size = new System.Drawing.Size(196, 22);
@@ -265,18 +264,26 @@
 			//
 			this._L10NSharpExtender.SetLocalizableToolTip(this._checkForNewVersionMenuItem, null);
 			this._L10NSharpExtender.SetLocalizationComment(this._checkForNewVersionMenuItem, null);
-			this._L10NSharpExtender.SetLocalizationPriority(this._checkForNewVersionMenuItem, L10NSharp.LocalizationPriority.Medium);
 			this._L10NSharpExtender.SetLocalizingId(this._checkForNewVersionMenuItem, "HelpMenu.checkForNewVersionToolStripMenuItem");
 			this._checkForNewVersionMenuItem.Name = "_checkForNewVersionMenuItem";
 			this._checkForNewVersionMenuItem.Size = new System.Drawing.Size(196, 22);
 			this._checkForNewVersionMenuItem.Text = "Check For New Version";
 			this._checkForNewVersionMenuItem.Click += new System.EventHandler(this._checkForNewVersionMenuItem_Click);
 			//
+			// _registrationMenuItem
+			//
+			this._L10NSharpExtender.SetLocalizableToolTip(this._registrationMenuItem, null);
+			this._L10NSharpExtender.SetLocalizationComment(this._registrationMenuItem, null);
+			this._L10NSharpExtender.SetLocalizingId(this._registrationMenuItem, "HelpMenu.registrationMenuItem");
+			this._registrationMenuItem.Name = "_registrationMenuItem";
+			this._registrationMenuItem.Size = new System.Drawing.Size(196, 22);
+			this._registrationMenuItem.Text = "Registration";
+			this._registrationMenuItem.Click += new System.EventHandler(this.OnRegistrationMenuItem_Click);
+			//
 			// _aboutBloomMenuItem
 			//
 			this._L10NSharpExtender.SetLocalizableToolTip(this._aboutBloomMenuItem, null);
 			this._L10NSharpExtender.SetLocalizationComment(this._aboutBloomMenuItem, null);
-			this._L10NSharpExtender.SetLocalizationPriority(this._aboutBloomMenuItem, L10NSharp.LocalizationPriority.Medium);
 			this._L10NSharpExtender.SetLocalizingId(this._aboutBloomMenuItem, "HelpMenu.creditsMenuItem");
 			this._aboutBloomMenuItem.Name = "_aboutBloomMenuItem";
 			this._aboutBloomMenuItem.Size = new System.Drawing.Size(196, 22);
@@ -300,6 +307,7 @@
 			// _L10NSharpExtender
 			//
 			this._L10NSharpExtender.LocalizationManagerId = "Bloom";
+			this._L10NSharpExtender.PrefixForNewItems = null;
 			//
 			// _tabStrip
 			//
@@ -447,6 +455,7 @@
 		private System.Windows.Forms.ToolStripMenuItem _showLogMenuItem;
 		private System.Windows.Forms.ToolStripSeparator _divider4;
 		private System.Windows.Forms.ToolStripMenuItem _checkForNewVersionMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem _registrationMenuItem;
 
 
 	}
