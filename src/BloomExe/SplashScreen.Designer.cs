@@ -103,7 +103,7 @@
 			//
 			this.flowLayoutPanel1.Controls.Add(this._shortVersionLabel);
 			this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-			this.flowLayoutPanel1.Location = new System.Drawing.Point(176, 46);
+			this.flowLayoutPanel1.Location = new System.Drawing.Point(209, 46);
 			this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
 			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
 			this.flowLayoutPanel1.Size = new System.Drawing.Size(157, 34);
@@ -133,9 +133,8 @@
 			this.label1.Location = new System.Drawing.Point(326, 64);
 			this.label1.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(30, 15);
+			this.label1.Size = new System.Drawing.Size(0, 15);
 			this.label1.TabIndex = 23;
-			this.label1.Text = "";
 			//
 			// pictureBox2
 			//
