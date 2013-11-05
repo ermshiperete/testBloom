@@ -15,6 +15,7 @@ using Palaso.Extensions;
 using Palaso.IO;
 using Palaso.Progress;
 using Palaso.Reporting;
+using Palaso.UI.WindowsForms.FileSystem;
 using Palaso.Xml;
 
 namespace Bloom.Book
@@ -719,6 +720,8 @@ namespace Bloom.Book
 
 				//TODO: what cause this to get encoded this way? Saw it happen when creating wall calendar
 				href = href.Replace("%5C", "/");
+				// This was in filename for "Basic Book.css" where the space should have been
+				href = href.Replace("%20", " ");
 
 
 				var fileName = Path.GetFileName(href);
