@@ -8,6 +8,7 @@ namespace MyLib
 	{
 		public MyClass()
 		{
+			// comment
 		}
 	}
 }
