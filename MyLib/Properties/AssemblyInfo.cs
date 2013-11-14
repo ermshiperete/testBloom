@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 // Information about this assembly is defined by the following attributes.
 // Change them to the values specific to your project.
 [assembly: AssemblyTitle("MyLib")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Just some dummy app")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SIL International")]
 [assembly: AssemblyProduct("")]
