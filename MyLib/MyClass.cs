@@ -11,7 +11,7 @@ namespace MyLib
 			// comment 1 and 2
 		}
 
-		public string Text { get { return string.Empty; }}
+		public string Text { get { return ""; }}
 	}
 }
 
